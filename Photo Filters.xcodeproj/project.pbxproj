@@ -61,6 +61,9 @@
 		7EB7B5B119EC349000B7B5F3 = {
 			isa = PBXGroup;
 			children = (
+				7EB7B5E419EC34C600B7B5F3 /* Model Layer */,
+				7EB7B5E319EC34BE00B7B5F3 /* View Layer */,
+				7EB7B5E219EC34A900B7B5F3 /* Controller Layer */,
 				7EB7B5BC19EC349000B7B5F3 /* Photo Filters */,
 				7EB7B5D519EC349000B7B5F3 /* Photo FiltersTests */,
 				7EB7B5BB19EC349000B7B5F3 /* Products */,
@@ -80,10 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				7EB7B5BF19EC349000B7B5F3 /* AppDelegate.swift */,
-				7EB7B5C419EC349000B7B5F3 /* ViewController.swift */,
-				7EB7B5C619EC349000B7B5F3 /* Main.storyboard */,
 				7EB7B5C919EC349000B7B5F3 /* Images.xcassets */,
-				7EB7B5CB19EC349000B7B5F3 /* LaunchScreen.xib */,
 				7EB7B5C119EC349000B7B5F3 /* Photo_Filters.xcdatamodeld */,
 				7EB7B5BD19EC349000B7B5F3 /* Supporting Files */,
 			);
@@ -113,6 +113,33 @@
 				7EB7B5D719EC349000B7B5F3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7EB7B5E219EC34A900B7B5F3 /* Controller Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7EB7B5C419EC349000B7B5F3 /* ViewController.swift */,
+			);
+			name = "Controller Layer";
+			path = "Photo Filters";
+			sourceTree = "<group>";
+		};
+		7EB7B5E319EC34BE00B7B5F3 /* View Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7EB7B5C619EC349000B7B5F3 /* Main.storyboard */,
+				7EB7B5CB19EC349000B7B5F3 /* LaunchScreen.xib */,
+			);
+			name = "View Layer";
+			path = "Photo Filters";
+			sourceTree = "<group>";
+		};
+		7EB7B5E419EC34C600B7B5F3 /* Model Layer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Model Layer";
+			path = "Photo Filters";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
