@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MySampleDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GalleryDelegate {
 
   @IBOutlet weak var imageView: UIImageView!
   var tapRecognizer : UITapGestureRecognizer!
@@ -22,6 +22,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     tapRecognizer.addTarget(self, action: "buttonPressed:")
     imageView.addGestureRecognizer(tapRecognizer)
     imageView.userInteractionEnabled = true
+    
+    imageView.layer.borderColor = UIColor.whiteColor().CGColor
+    imageView.layer.borderWidth = 2
   }
 
   override func didReceiveMemoryWarning() {
@@ -30,7 +33,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "SHOW_GALLERY"{
+      let window : UIWindow = UIApplication.sharedApplication().keyWindow
+      UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
+      self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
+      let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      
       let destinationVC = segue.destinationViewController as GalleryViewController
+      destinationVC.backgroundImage = screenshot
       destinationVC.delegate = self
     }
   }
@@ -47,7 +57,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     imageView.image = info["UIImagePickerControllerEditedImage"] as? UIImage
-    println(imageView.frame.size)
+    imageView.removeGestureRecognizer(tapRecognizer)
+    
     picker.dismissViewControllerAnimated(true, completion: nil)
   }
   
@@ -55,7 +66,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   @IBAction func buttonPressed(sender: AnyObject){
     
-    let alertController = UIAlertController(title: nil, message: "Choose an option", preferredStyle: UIAlertControllerStyle.ActionSheet)
+    let alertController = UIAlertController(title: nil, message: "Import Photo From", preferredStyle: UIAlertControllerStyle.ActionSheet)
     let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) { (action) -> Void in
       let picker = UIImagePickerController()
       picker.allowsEditing = true
@@ -71,12 +82,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       
       self.presentViewController(picker, animated: true, completion: nil)
     }
-    let galleryAction = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
+    let galleryAction = UIAlertAction(title: "Random Picture Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
       self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
     
-    alertController.addAction(cameraAction)
+    if UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Front) || UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear) {
+      alertController.addAction(cameraAction)
+    }
     alertController.addAction(libraryAction)
     alertController.addAction(galleryAction)
     alertController.addAction(cancelAction)

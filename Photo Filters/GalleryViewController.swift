@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MySampleDelegate {
+protocol GalleryDelegate {
   func didTapOnPicture(image: UIImage)
 }
 
@@ -18,8 +18,9 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   let imageQueue = NSOperationQueue()
   var adjectiveArray = [String]()
   var nounArray = [String]()
+  var backgroundImage : UIImage!
   
-  var delegate : MySampleDelegate?
+  var delegate : GalleryDelegate?
   
   // MARK - Lifecycle Methods
   
@@ -39,6 +40,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
 
   }
   
+  override func viewDidAppear(animated: Bool) {
+    self.view.backgroundColor = UIColor(patternImage: backgroundImage)
+  }
+  
   // MARK - UICollectionView Data Source
   
   func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -56,6 +61,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     cell.imageView.image = nil
     cell.spinningWheel.startAnimating()
     var urlString : String!
+
     
     switch indexPath.section{
     case 0:
@@ -72,25 +78,24 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
       urlString = "http://lorempixel.com/400/400/city"
     }
     let url = NSURL(string: urlString)
-    //if cell.isLoading == false {
-      imageQueue.addOperationWithBlock { () -> Void in
-        cell.isLoading = true
-        let data = NSData(contentsOfURL: url)
-        let image = UIImage(data: data)
-        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-          cell.imageView.image = image
-          cell.spinningWheel.stopAnimating()
-          cell.userInteractionEnabled = true
-          cell.isLoading = false
-        })
-      //}
-    }
+      //if cell.isLoading == false {
+        imageQueue.addOperationWithBlock { () -> Void in
+          cell.isLoading = true
+          let data = NSData(contentsOfURL: url)
+          let image = UIImage(data: data)
+          NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            cell.imageView.image = image
+            cell.spinningWheel.stopAnimating()
+            cell.userInteractionEnabled = true
+            cell.isLoading = false
+          })
+        //}
+      }
     
-    var randomNumber1: Int = Int(arc4random()) % adjectiveArray.count
+    var randomNumber1: Int = Int(arc4random()) % self.adjectiveArray.count
     var randomNumber2: Int = Int(arc4random()) % adjectiveArray.count
     let randomAdj = adjectiveArray[randomNumber1]
     let randomNou = nounArray[randomNumber2]
-    cell.titleLabel.text = randomAdj + " " + randomNou
     
     return cell
   }
