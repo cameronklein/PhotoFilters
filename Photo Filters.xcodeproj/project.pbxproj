@@ -21,6 +21,7 @@
 		7E53395819EDD08300A5AEC1 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53395719EDD08300A5AEC1 /* NetworkController.swift */; };
 		7E53395A19EDDA1A00A5AEC1 /* ComposeTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53395919EDDA1A00A5AEC1 /* ComposeTweetViewController.swift */; };
 		7E824E4919ECAE7E0028D3FE /* drawing-1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E824E4819ECAE7E0028D3FE /* drawing-1.svg */; };
+		7EA0696D19EF0EE7007D19BF /* twitter-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EA0696C19EF0EE7007D19BF /* twitter-32.png */; };
 		7EB7B5C019EC349000B7B5F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB7B5BF19EC349000B7B5F3 /* AppDelegate.swift */; };
 		7EB7B5C319EC349000B7B5F3 /* Photo_Filters.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EB7B5C119EC349000B7B5F3 /* Photo_Filters.xcdatamodeld */; };
 		7EB7B5C519EC349000B7B5F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB7B5C419EC349000B7B5F3 /* ViewController.swift */; };
@@ -57,6 +58,7 @@
 		7E53395719EDD08300A5AEC1 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		7E53395919EDDA1A00A5AEC1 /* ComposeTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeTweetViewController.swift; sourceTree = "<group>"; };
 		7E824E4819ECAE7E0028D3FE /* drawing-1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "drawing-1.svg"; sourceTree = "<group>"; };
+		7EA0696C19EF0EE7007D19BF /* twitter-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-32.png"; sourceTree = "<group>"; };
 		7EB7B5BA19EC349000B7B5F3 /* Photo Filters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Filters.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB7B5BE19EC349000B7B5F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EB7B5BF19EC349000B7B5F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				7E2295ED19EEE17C00BBF814 /* cancel-32.png */,
+				7EA0696C19EF0EE7007D19BF /* twitter-32.png */,
 				7E824E4819ECAE7E0028D3FE /* drawing-1.svg */,
 				7E348AB219EC6757002FD3DA /* logo.png */,
 				7E348AB819EC6A18002FD3DA /* corner.png */,
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EA0696D19EF0EE7007D19BF /* twitter-32.png in Resources */,
 				7E348AB319EC6757002FD3DA /* logo.png in Resources */,
 				7E0E76D019ECA8BA00DAC295 /* Images.xcassets in Resources */,
 				7EB7B5C819EC349000B7B5F3 /* Main.storyboard in Resources */,

@@ -23,6 +23,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var originalThumbnail : UIImage?
   var lastClickedIndex : Int?
   var collectionViewInBounds = false
+  var requestedGalleryType : GalleryType = .Random
 
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var blurView: UIVisualEffectView!
@@ -33,7 +34,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   @IBOutlet weak var twitterButton: UIButton!
   @IBOutlet weak var cameraButton: UIButton!
   @IBOutlet weak var settingsButton: UIButton!
-  // MARK - Lifecycle Methods
+  
+  // MARK: - Lifecycle Methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,6 +75,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(false)
   }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(false)
+  }
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
@@ -80,6 +86,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "SHOW_GALLERY"{
+      
       let window : UIWindow = UIApplication.sharedApplication().keyWindow
       UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
       self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
@@ -88,11 +95,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       
       let destinationVC = segue.destinationViewController as GalleryViewController
       destinationVC.backgroundImage = screenshot
+      destinationVC.type = requestedGalleryType
       destinationVC.delegate = self
     }
   }
   
-  // MARK - MySampleDelegate
+  // MARK: - GalleryDelegate
   
   func didTapOnPicture(image: UIImage, frame: CGRect? = nil) {
 
@@ -128,7 +136,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     CGPathAddCurveToPoint(thePath, nil, tempView!.center.x, maxY, maxX, maxY, imageView.center.x, imageView.center.y)
     let animation = CAKeyframeAnimation(keyPath: "position")
     animation.path = thePath
-    //animation.duration = 1.0
+    animation.duration = 1.0
     
     let multiplier = imageView.frame.height / tempView!.frame.size.height
     let originalScale = CATransform3DMakeScale(1.0, 1.0, 1.0)
@@ -142,7 +150,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let animationTransform = CAKeyframeAnimation(keyPath: "bounds")
     
-    //animationTransform.duration = 1.0
+    animationTransform.duration = 1.0
     let initialBounds = NSValue(CGRect: tempView!.bounds)
     let secondBounds = NSValue(CGRect: tempView!.bounds)
     let finalBounds = NSValue(CGRect: imageView.bounds)
@@ -153,28 +161,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 //    self.tempView!.layer.addAnimation(animationTransform, forKey: "transform")
 //    self.tempView!.layer.addAnimation(animation, forKey: "position")
+//    self.tempView!.bounds = self.imageView.bounds
+//    self.tempView!.center = self.imageView.center
     
 //    UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: { () -> Void in
-
+//
 //      self.tempView!.layer.addAnimation(animationTransform, forKey: "transform")
 //      self.tempView!.layer.addAnimation(animation, forKey: "position")
-      
-//      self.tempView!.bounds = self.imageView.bounds
-//      self.tempView!.center = self.imageView.center
+//      
+//      
 //      }) { (success) -> Void in
 //        println("Completion called!")
 //        if success == true {
+//          self.tempView!.bounds = self.imageView.bounds
+//          self.tempView!.center = self.imageView.center
 //          println("Success == true")
 //          self.imageView.image = image
 //          self.tempView!.removeFromSuperview()
 //        }
 //    }
-      
+    
       self.imageView.image = image
       self.tempView!.removeFromSuperview()
   }
   
-  // MARK - UIImagePickerControllerDelegate
+  // MARK: - UIImagePickerControllerDelegate
   
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     imageView.image = info["UIImagePickerControllerEditedImage"] as? UIImage
@@ -189,7 +200,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     picker.dismissViewControllerAnimated(true, completion: nil)
   }
   
-  // MARK - UICollectionViewDataSource
+  // MARK: - UICollectionViewDataSource
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if imageHasBeenSet{
@@ -217,7 +228,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     return cell
   }
   
-  // MARK - UICollectionView Delegate
+  // MARK: - UICollectionView Delegate
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
     if lastClickedIndex != indexPath.row{
@@ -239,7 +250,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
   }
   
-  // MARK - Helper Methods
+  // MARK: - Helper Methods
   
   override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
     println("Animation Did Stop Function Called")
@@ -291,7 +302,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
   }
   
-  // MARK - IBActions
+  // MARK: - IBActions
   
   @IBAction func buttonPressed(sender: AnyObject){
     
@@ -303,17 +314,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       picker.delegate = self
       self.presentViewController(picker, animated: true, completion: nil)
     }
+    
     let libraryAction = UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default) { (action) -> Void in
-      let picker = UIImagePickerController()
-      picker.allowsEditing = true
-      picker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
-      picker.delegate = self
-      
-      self.presentViewController(picker, animated: true, completion: nil)
-    }
-    let galleryAction = UIAlertAction(title: "Random Picture Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
+      self.requestedGalleryType = .PhotoAPI
       self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
     }
+    
+    let galleryAction = UIAlertAction(title: "Random Picture Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
+      self.requestedGalleryType = .Random
+      self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
+    }
+    
     let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
     
     if UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Front) || UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear) {

@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import Photos
 
 protocol GalleryDelegate {
   func didTapOnPicture(image: UIImage, frame: CGRect?)
+}
+
+enum GalleryType {
+  case Random, PhotoAPI
 }
 
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -19,6 +24,12 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   var adjectiveArray = [String]()
   var nounArray = [String]()
   var backgroundImage : UIImage!
+  var type : GalleryType = .Random
+  
+  var assetFetchResults: PHFetchResult!
+  var assetCollection: PHAssetCollection!
+  var imageManager: PHCachingImageManager!
+  var assetCellSize: CGSize!
   
   var delegate : GalleryDelegate?
   
@@ -26,18 +37,35 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    adjectiveArray = ["Angry", "Voracious", "Silly", "Loud", "False", "Naive", "Spiteful", "Heavenly", "Curved"]
-    nounArray = ["Mass", "Damage", "Reward", "Growth", "Act", "Effect", "Rhythm", "Verse", "Plant"]
     
     collectionView.registerNib(UINib(nibName: "HeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HEADER")
     
+    switch type{
+      
+      case .Random:
+        
+        adjectiveArray = ["Angry", "Voracious", "Silly", "Loud", "False", "Naive", "Spiteful", "Heavenly", "Curved"]
+        nounArray = ["Mass", "Damage", "Reward", "Growth", "Act", "Effect", "Rhythm", "Verse", "Plant"]
+        
+      case .PhotoAPI:
+        
+        self.imageManager = PHCachingImageManager()
+        self.assetFetchResults = PHAsset.fetchAssetsWithOptions(nil)
+        
+        var scale = UIScreen.mainScreen().scale
+        var flowLayout = self.collectionView.collectionViewLayout as UICollectionViewFlowLayout
+        var cellSize = flowLayout.itemSize
+        
+        self.assetCellSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale)
+      
+    }
+    
+    collectionView.dataSource = self
+    collectionView.delegate = self
   }
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
-
   }
   
   override func viewDidAppear(animated: Bool) {
@@ -47,11 +75,21 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   // MARK - UICollectionView Data Source
   
   func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-    return 6
+    switch type {
+    case .Random:
+      return 6
+    case .PhotoAPI:
+      return 1
+    }
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 9
+    switch type {
+    case .Random:
+      return 6
+    case .PhotoAPI:
+      return assetFetchResults.count
+    }
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -67,37 +105,29 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
       cell.hasSetMotion = true
     }
     
-    switch indexPath.section{
-    case 0:
-      urlString = "http://lorempixel.com/400/400/animals"
-    case 1:
-      urlString = "http://lorempixel.com/400/400/food"
-    case 2:
-      urlString = "http://lorempixel.com/400/400/sports"
-    case 3:
-      urlString = "http://lorempixel.com/400/400/nature"
-    case 4:
-      urlString = "http://lorempixel.com/400/400/people"
-    default:
-      urlString = "http://lorempixel.com/400/400/city"
-    }
-    let url = NSURL(string: urlString)
-      //if cell.isLoading == false {
-        imageQueue.addOperationWithBlock { () -> Void in
-          cell.isLoading = true
-          let data = NSData(contentsOfURL: url)
-          let image = UIImage(data: data)
-          NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+    var currentTag = cell.tag + 1
+    cell.tag = currentTag
+
+    switch type{
+      
+      case .Random:
+        fetchRandomImageForImagePath(indexPath, completionHandler: { (image) -> Void in
+          if cell.tag == currentTag{
             cell.imageView.image = image
             cell.spinningWheel.stopAnimating()
             cell.userInteractionEnabled = true
-            cell.isLoading = false
-          })
-        //}
-      }
-    
-//    cell.imageView.layer.borderWidth = 1
-//    cell.imageView.layer.borderColor = UIColor.whiteColor().CGColor
+          }
+        })
+        
+      case .PhotoAPI:
+        fetchImagesFromPhotosAPIForIndexPath(indexPath, completionHandler: { (image) -> Void in
+          if cell.tag == currentTag{
+            cell.imageView.image = image
+            cell.spinningWheel.stopAnimating()
+            cell.userInteractionEnabled = true
+          }
+        })
+    }
     
     return cell
   }
@@ -106,25 +136,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
       let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "HEADER", forIndexPath: indexPath) as HeaderView
     
-    switch indexPath.section{
-    case 0:
-      view.label.text = "Animals"
-    case 1:
-      view.label.text = "Food"
-    case 2:
-      view.label.text = "Sports"
-    case 3:
-      view.label.text = "Nature"
-    case 4:
-      view.label.text = "People"
-    default:
-      view.label.text = "City"
-    }
+    let categories = ["animals", "food" ,"sports" ,"nature", "people", "city"]
+    view.label.text = categories[indexPath.section]
 
-    view.view.clipsToBounds = true
-    view.view.layer.cornerRadius = 10
-      return view
-    
+    return view
   }
   
   // MARK - UICollectionView Delegate
@@ -140,7 +155,30 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     cell.imageView.image = nil
   }
   
-  // MARK - Helper Methods
+  func fetchRandomImageForImagePath(indexPath: NSIndexPath, completionHandler: (UIImage) -> Void) {
+    
+    let categories = ["animals", "food" ,"sports" ,"nature", "people", "city"]
+    var urlString = "http://lorempixel.com/400/400/" + categories[indexPath.section]
+    let url = NSURL(string: urlString)
+    imageQueue.addOperationWithBlock { () -> Void in
+      let data = NSData(contentsOfURL: url)
+      let image = UIImage(data: data)
+      NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+        completionHandler(image)
+      })
+    }
+    
+  }
+  
+  func fetchImagesFromPhotosAPIForIndexPath(indexPath: NSIndexPath, completionHandler: (UIImage) -> Void) {
+    var asset = self.assetFetchResults[indexPath.row] as PHAsset
+    
+    self.imageManager.requestImageForAsset(asset, targetSize: self.assetCellSize, contentMode: PHImageContentMode.AspectFill, options: nil) { (image, info) -> Void in
+      completionHandler(image)
+    }
+  }
+  
+  // MARK - IBAction
   
   @IBAction func cancelPressed(sender: AnyObject) {
     self.dismissViewControllerAnimated(true, completion: nil)
