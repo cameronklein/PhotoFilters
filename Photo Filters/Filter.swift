@@ -12,6 +12,8 @@ import CoreData
 class Filter: NSManagedObject {
 
     @NSManaged var name: String
+    @NSManaged var readableName: String
     @NSManaged var favorited: NSNumber
+  
 
 }

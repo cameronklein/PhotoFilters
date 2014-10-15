@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ComposeTweetViewController: UIViewController, UITextViewDelegate {
+class ComposeTweetViewController: UIViewController, UITextFieldDelegate {
   
   @IBOutlet weak var miniView: UIView!
   
-  @IBOutlet weak var textField: UITextView!
+  @IBOutlet weak var charactersRemaining: UILabel!
+  @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var blurView: UIVisualEffectView!
   @IBOutlet weak var postButton: UIButton!
@@ -28,15 +29,16 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
     super.viewDidLoad()
     
     self.networkController = NetworkController()
-    
-    textField.layer.borderColor = UIColor.blackColor().CGColor
-    textField.layer.borderWidth = 1
-    textField.layer.cornerRadius = 10
+
     textField.clipsToBounds = true
-    
     textField.delegate = self
+    
     miniView.layer.cornerRadius = 10
     miniView.clipsToBounds = true
+    charactersRemaining.text = "140"
+    
+    textField.addTarget(self, action: "textFieldDidChange", forControlEvents: UIControlEvents.EditingChanged)
+    
     
   }
   
@@ -81,14 +83,21 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
     self.dismissViewControllerAnimated(true, completion: nil)
   }
   
-  func textViewShouldEndEditing(textView: UITextView) -> Bool {
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
     textField.resignFirstResponder()
-    return false
+    return true
   }
   
+  func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+
+  func textFieldDidChange() {
+    let numberOfChars = countElements(textField.text)
+    let remaining = 140 - numberOfChars
+    charactersRemaining.text = remaining.description
+  }
+
+
 }
-
-
-
-
-

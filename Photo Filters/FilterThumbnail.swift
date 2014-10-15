@@ -16,12 +16,14 @@ class FilterThumbnail {
   var GPUContext        : CIContext?
   var filter            : CIFilter?
   var filterName        : String
+  var readableName      : String
   
-  init(name: String, thumbnail: UIImage, queue: NSOperationQueue, context: CIContext) {
-    self.filterName             = name
+  init(name: String, readable: String, thumbnail: UIImage, queue: NSOperationQueue, context: CIContext) {
+    self.filterName         = name
     self.originalThumbnail  = thumbnail
     self.imageQueue         = queue
     self.GPUContext         = context
+    self.readableName       = readable
   }
   
   func generateThumbnail (completionHandler: (image : UIImage) -> Void) {

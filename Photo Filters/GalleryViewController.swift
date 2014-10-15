@@ -62,6 +62,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     cell.spinningWheel.startAnimating()
     var urlString : String!
 
+    if cell.hasSetMotion == false {
+      cell.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
+      cell.hasSetMotion = true
+    }
     
     switch indexPath.section{
     case 0:
@@ -100,7 +104,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   
   func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
     
-      println("Called!")
       let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "HEADER", forIndexPath: indexPath) as HeaderView
     
     switch indexPath.section{

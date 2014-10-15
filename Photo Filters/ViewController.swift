@@ -22,13 +22,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var imageHasBeenSet = false
   var originalThumbnail : UIImage?
   var lastClickedIndex : Int?
+  var collectionViewInBounds = false
 
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var blurView: UIVisualEffectView!
   @IBOutlet weak var collectionView: UICollectionView!
-  
+  @IBOutlet weak var collectionViewBottomConstraint: NSLayoutConstraint!
+  @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var logo: UIImageView!
+  @IBOutlet weak var twitterButton: UIButton!
+  @IBOutlet weak var cameraButton: UIButton!
+  @IBOutlet weak var settingsButton: UIButton!
   // MARK - Lifecycle Methods
-  // TODO - Show corner thing when image added
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -44,6 +49,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     self.generateThumbnails()
     self.collectionView.delegate = self
     self.collectionView.dataSource = self
+    
     tapRecognizer = UITapGestureRecognizer()
     tapRecognizer.addTarget(self, action: "buttonPressed:")
     imageView.addGestureRecognizer(tapRecognizer)
@@ -52,9 +58,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     imageView.layer.borderColor = UIColor.whiteColor().CGColor
     imageView.layer.borderWidth = 2
     
-    
     let seeder = CoreDataSeeder(context: context!)
     //seeder.seedCoreData()
+    
+    let buttonsArray = [cameraButton,twitterButton,settingsButton]
+    for button in buttonsArray{
+      button.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
+    }
+    logo.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
+    self.imageView.addNaturalOnTopEffect(maximumRelativeValue: 10.0)
     
   }
   
@@ -158,8 +170,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 //        }
 //    }
       
-
-      
       self.imageView.image = image
       self.tempView!.removeFromSuperview()
   }
@@ -202,10 +212,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         cell.imageView.image = image
       })
     }
+    cell.label.text = wrapper.readableName
       
     return cell
   }
   
+  // MARK - UICollectionView Delegate
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
     if lastClickedIndex != indexPath.row{
@@ -228,6 +240,58 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   }
   
   // MARK - Helper Methods
+  
+  override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    println("Animation Did Stop Function Called")
+    if flag == true {
+      println("Flag = true")
+      self.imageView.image = placeholderImage
+      self.tempView?.removeFromSuperview()
+    }
+  }
+  
+  func fetchFilters(){
+    var fetchRequest = NSFetchRequest(entityName: "Filter")
+    
+    let context = appDel.managedObjectContext
+    
+    var error : NSError?
+    let results = context!.executeFetchRequest(fetchRequest, error: &error)
+    println(error)
+    
+    if let filters = results as? [Filter]{
+      self.filters = filters
+    }
+    
+    println("\(filters.count) filters retrieved!")
+    
+  }
+  
+  func getThumbnailOfMainImage() {
+    let size = CGSize(width: 100, height: 100)
+    UIGraphicsBeginImageContext(size)
+    self.placeholderImage!.drawInRect(CGRect(x: 0, y: 0, width: 100, height: 100))
+    self.originalThumbnail = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+  }
+  
+  func generateThumbnails(){
+    if let image = originalThumbnail{
+      
+      filterThumbnails.removeAll(keepCapacity: true)
+      for filter in filters {
+        filterThumbnails.append(FilterThumbnail(name: filter.name, readable: filter.readableName, thumbnail: image, queue: imageQueue, context: GPUContext))
+      }
+      println("\(filterThumbnails.count) filter thumbnails generated!")
+    }
+  }
+  
+  func resetThumbnails() {
+    filterThumbnails.removeAll(keepCapacity: true)
+
+  }
+  
+  // MARK - IBActions
   
   @IBAction func buttonPressed(sender: AnyObject){
     
@@ -263,55 +327,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
   }
   
-  override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
-    println("Animation Did Stop Function Called")
-    if flag == true {
-      println("Flag = true")
-      self.imageView.image = placeholderImage
-      self.tempView?.removeFromSuperview()
-    }
-  }
-  
-  func fetchFilters(){
-    var fetchRequest = NSFetchRequest(entityName: "Filter")
-    
-    let context = appDel.managedObjectContext
-    
-    var error : NSError?
-    let results = context!.executeFetchRequest(fetchRequest, error: &error)
-    println(error)
-    
-    if let filters = results as? [Filter]{
-      self.filters = filters
-    }
-    
-    println("\(filters.count) filters retrieved!")
-
-  }
-  
-  func getThumbnailOfMainImage() {
-    let size = CGSize(width: 100, height: 100)
-    UIGraphicsBeginImageContext(size)
-    self.placeholderImage!.drawInRect(CGRect(x: 0, y: 0, width: 100, height: 100))
-    self.originalThumbnail = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-  }
-  
-  func generateThumbnails(){
-    if let image = originalThumbnail{
- 
-      filterThumbnails.removeAll(keepCapacity: true)
-      for filter in filters {
-        filterThumbnails.append(FilterThumbnail(name: filter.name, thumbnail: image, queue: imageQueue, context: GPUContext))
-      }
-      println("\(filterThumbnails.count) filter thumbnails generated!")
-    }
-  }
-  
-  func resetThumbnails() {
-    filterThumbnails.removeAll(keepCapacity: true)
-
-  }
   
   @IBAction func tweetButtonPressed(sender: AnyObject) {
     
@@ -326,14 +341,51 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     composeTweetVC.backgroundImage = screenshot
     
-    UIView.animateWithDuration(0.2, animations: { () -> Void in
-      self.blurView.hidden = true
-    })
+
     
     self.presentViewController(composeTweetVC, animated: true) { () -> Void in
       println("Presented!")
     }
   }
 
+  @IBAction func settingsButtonPressed(sender: AnyObject) {
+    
+    if collectionViewInBounds{
+      collectionViewBottomConstraint.constant -= 140
+      imageTopConstraint.constant += 50
+      collectionViewInBounds = false
+    } else{
+      collectionViewBottomConstraint.constant += 140
+      imageTopConstraint.constant -= 50
+      collectionViewInBounds = true
+    }
+    
+    UIView.animateWithDuration(0.4, animations: { () -> Void in
+      self.view.layoutSubviews()
+    })
+  }
+  
+  @IBAction func swipedDown(sender: AnyObject) {
+    if collectionViewInBounds{
+      collectionViewBottomConstraint.constant -= 140
+      imageTopConstraint.constant += 50
+      collectionViewInBounds = false
+    }
+    UIView.animateWithDuration(0.4, animations: { () -> Void in
+      self.view.layoutSubviews()
+    })
+  }
+  
+  @IBAction func swipedUp(sender: AnyObject) {
+    if collectionViewInBounds == false{
+      collectionViewBottomConstraint.constant += 140
+      imageTopConstraint.constant -= 50
+      collectionViewInBounds = true
+    }
+    UIView.animateWithDuration(0.4, animations: { () -> Void in
+      self.view.layoutSubviews()
+    })
+
+  }
 }
 

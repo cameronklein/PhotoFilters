@@ -13,4 +13,5 @@ class GalleryCell: UICollectionViewCell {
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var spinningWheel: UIActivityIndicatorView!
   var isLoading = false
+  var hasSetMotion = false
 }
