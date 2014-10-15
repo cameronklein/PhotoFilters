@@ -15,6 +15,9 @@
 		7E348AB319EC6757002FD3DA /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E348AB219EC6757002FD3DA /* logo.png */; };
 		7E348AB519EC67BA002FD3DA /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E348AB419EC67BA002FD3DA /* placeholder.png */; };
 		7E348AB919EC6A18002FD3DA /* corner.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E348AB819EC6A18002FD3DA /* corner.png */; };
+		7E53395619EDB4B900A5AEC1 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53395519EDB4B900A5AEC1 /* FilterCell.swift */; };
+		7E53395819EDD08300A5AEC1 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53395719EDD08300A5AEC1 /* NetworkController.swift */; };
+		7E53395A19EDDA1A00A5AEC1 /* ComposeTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53395919EDDA1A00A5AEC1 /* ComposeTweetViewController.swift */; };
 		7E824E4919ECAE7E0028D3FE /* drawing-1.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E824E4819ECAE7E0028D3FE /* drawing-1.svg */; };
 		7EB7B5C019EC349000B7B5F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB7B5BF19EC349000B7B5F3 /* AppDelegate.swift */; };
 		7EB7B5C319EC349000B7B5F3 /* Photo_Filters.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EB7B5C119EC349000B7B5F3 /* Photo_Filters.xcdatamodeld */; };
@@ -22,6 +25,9 @@
 		7EB7B5C819EC349000B7B5F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EB7B5C619EC349000B7B5F3 /* Main.storyboard */; };
 		7EB7B5CD19EC349000B7B5F3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EB7B5CB19EC349000B7B5F3 /* LaunchScreen.xib */; };
 		7EB7B5D919EC349000B7B5F3 /* Photo_FiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB7B5D819EC349000B7B5F3 /* Photo_FiltersTests.swift */; };
+		7EBCFE6819ED91750076261D /* FilterThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCFE6719ED91750076261D /* FilterThumbnail.swift */; };
+		7EBCFE6A19EDA0600076261D /* CoreDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCFE6919EDA0600076261D /* CoreDataSeeder.swift */; };
+		7EBCFE6C19EDA0D80076261D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCFE6B19EDA0D80076261D /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +49,9 @@
 		7E348AB219EC6757002FD3DA /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		7E348AB419EC67BA002FD3DA /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		7E348AB819EC6A18002FD3DA /* corner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corner.png; sourceTree = "<group>"; };
+		7E53395519EDB4B900A5AEC1 /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		7E53395719EDD08300A5AEC1 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		7E53395919EDDA1A00A5AEC1 /* ComposeTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeTweetViewController.swift; sourceTree = "<group>"; };
 		7E824E4819ECAE7E0028D3FE /* drawing-1.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "drawing-1.svg"; sourceTree = "<group>"; };
 		7EB7B5BA19EC349000B7B5F3 /* Photo Filters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Filters.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB7B5BE19EC349000B7B5F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +63,9 @@
 		7EB7B5D219EC349000B7B5F3 /* Photo FiltersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Photo FiltersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB7B5D719EC349000B7B5F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EB7B5D819EC349000B7B5F3 /* Photo_FiltersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo_FiltersTests.swift; sourceTree = "<group>"; };
+		7EBCFE6719ED91750076261D /* FilterThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterThumbnail.swift; sourceTree = "<group>"; };
+		7EBCFE6919EDA0600076261D /* CoreDataSeeder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataSeeder.swift; sourceTree = "<group>"; };
+		7EBCFE6B19EDA0D80076261D /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +89,9 @@
 		7EB7B5B119EC349000B7B5F3 = {
 			isa = PBXGroup;
 			children = (
+				7EB7B5E219EC34A900B7B5F3 /* Controller Layer */,
 				7EB7B5E419EC34C600B7B5F3 /* Model Layer */,
 				7EB7B5E319EC34BE00B7B5F3 /* View Layer */,
-				7EB7B5E219EC34A900B7B5F3 /* Controller Layer */,
 				7EB7B5BC19EC349000B7B5F3 /* Photo Filters */,
 				7EB7B5D519EC349000B7B5F3 /* Photo FiltersTests */,
 				7EB7B5BB19EC349000B7B5F3 /* Products */,
@@ -139,7 +151,10 @@
 			isa = PBXGroup;
 			children = (
 				7EB7B5C419EC349000B7B5F3 /* ViewController.swift */,
+				7E53395719EDD08300A5AEC1 /* NetworkController.swift */,
+				7EBCFE6919EDA0600076261D /* CoreDataSeeder.swift */,
 				7E348AAA19EC3C8E002FD3DA /* GalleryViewController.swift */,
+				7E53395919EDDA1A00A5AEC1 /* ComposeTweetViewController.swift */,
 			);
 			name = "Controller Layer";
 			path = "Photo Filters";
@@ -149,10 +164,11 @@
 			isa = PBXGroup;
 			children = (
 				7EB7B5C619EC349000B7B5F3 /* Main.storyboard */,
-				7E348AAC19EC4264002FD3DA /* GalleryCell.swift */,
 				7EB7B5CB19EC349000B7B5F3 /* LaunchScreen.xib */,
-				7E0E76CB19EC7C5500DAC295 /* HeaderView.swift */,
 				7E0E76CC19EC7C5500DAC295 /* HeaderView.xib */,
+				7E348AAC19EC4264002FD3DA /* GalleryCell.swift */,
+				7E0E76CB19EC7C5500DAC295 /* HeaderView.swift */,
+				7E53395519EDB4B900A5AEC1 /* FilterCell.swift */,
 			);
 			name = "View Layer";
 			path = "Photo Filters";
@@ -161,6 +177,8 @@
 		7EB7B5E419EC34C600B7B5F3 /* Model Layer */ = {
 			isa = PBXGroup;
 			children = (
+				7EBCFE6719ED91750076261D /* FilterThumbnail.swift */,
+				7EBCFE6B19EDA0D80076261D /* Filter.swift */,
 			);
 			name = "Model Layer";
 			path = "Photo Filters";
@@ -271,12 +289,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E53395819EDD08300A5AEC1 /* NetworkController.swift in Sources */,
 				7EB7B5C519EC349000B7B5F3 /* ViewController.swift in Sources */,
 				7E0E76CD19EC7C5500DAC295 /* HeaderView.swift in Sources */,
+				7E53395A19EDDA1A00A5AEC1 /* ComposeTweetViewController.swift in Sources */,
+				7EBCFE6A19EDA0600076261D /* CoreDataSeeder.swift in Sources */,
 				7E348AAD19EC4264002FD3DA /* GalleryCell.swift in Sources */,
 				7E348AAB19EC3C8E002FD3DA /* GalleryViewController.swift in Sources */,
 				7EB7B5C319EC349000B7B5F3 /* Photo_Filters.xcdatamodeld in Sources */,
 				7EB7B5C019EC349000B7B5F3 /* AppDelegate.swift in Sources */,
+				7EBCFE6C19EDA0D80076261D /* Filter.swift in Sources */,
+				7EBCFE6819ED91750076261D /* FilterThumbnail.swift in Sources */,
+				7E53395619EDB4B900A5AEC1 /* FilterCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

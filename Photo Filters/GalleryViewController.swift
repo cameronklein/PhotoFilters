@@ -9,7 +9,7 @@
 import UIKit
 
 protocol GalleryDelegate {
-  func didTapOnPicture(image: UIImage)
+  func didTapOnPicture(image: UIImage, frame: CGRect?)
 }
 
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -92,10 +92,8 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         //}
       }
     
-    var randomNumber1: Int = Int(arc4random()) % self.adjectiveArray.count
-    var randomNumber2: Int = Int(arc4random()) % adjectiveArray.count
-    let randomAdj = adjectiveArray[randomNumber1]
-    let randomNou = nounArray[randomNumber2]
+//    cell.imageView.layer.borderWidth = 1
+//    cell.imageView.layer.borderColor = UIColor.whiteColor().CGColor
     
     return cell
   }
@@ -107,17 +105,17 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     switch indexPath.section{
     case 0:
-      view.label.text = "Animals!"
+      view.label.text = "Animals"
     case 1:
-      view.label.text = "Food!"
+      view.label.text = "Food"
     case 2:
-      view.label.text = "Sports!"
+      view.label.text = "Sports"
     case 3:
-      view.label.text = "Nature!"
+      view.label.text = "Nature"
     case 4:
-      view.label.text = "People!"
+      view.label.text = "People"
     default:
-      view.label.text = "City!"
+      view.label.text = "City"
     }
 
     view.view.clipsToBounds = true
@@ -131,7 +129,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     println("Did Select")
     let cell = collectionView.cellForItemAtIndexPath(indexPath) as GalleryCell
-    delegate?.didTapOnPicture(cell.imageView.image!)
+    delegate?.didTapOnPicture(cell.imageView.image!, frame: cell.frame)
     self.dismissViewControllerAnimated(true, completion: nil)
   }
   

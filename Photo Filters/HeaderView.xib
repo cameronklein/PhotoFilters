@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A386a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
@@ -14,12 +14,12 @@
                     <rect key="frame" x="20" y="20" width="376" height="195"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I AM A HEADER!!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViN-Iy-WZg">
-                            <rect key="frame" x="72" y="10" width="232" height="175"/>
+                            <rect key="frame" x="72" y="0.0" width="232" height="195"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="Qkb-2R-RD5"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="30"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -28,12 +28,12 @@
                             </variation>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="ViN-Iy-WZg" firstAttribute="top" secondItem="lrA-bk-kB9" secondAttribute="top" constant="10" id="P8F-Km-QBz"/>
+                        <constraint firstItem="ViN-Iy-WZg" firstAttribute="top" secondItem="lrA-bk-kB9" secondAttribute="top" id="P8F-Km-QBz"/>
                         <constraint firstAttribute="centerX" secondItem="ViN-Iy-WZg" secondAttribute="centerX" id="V4p-4V-jUa"/>
                         <constraint firstAttribute="centerY" secondItem="ViN-Iy-WZg" secondAttribute="centerY" id="dWF-PE-DEM"/>
-                        <constraint firstAttribute="bottom" secondItem="ViN-Iy-WZg" secondAttribute="bottom" constant="10" id="ft4-D4-qDb"/>
+                        <constraint firstAttribute="bottom" secondItem="ViN-Iy-WZg" secondAttribute="bottom" id="ft4-D4-qDb"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
