@@ -19,8 +19,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="D3H-xa-gUb">
-                                <rect key="frame" x="0.0" y="800" width="600" height="140"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP1-M7-a6k">
+                                <rect key="frame" x="203" y="937" width="194" height="47"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="29"/>
+                                <state key="normal" title="Save to Library!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickedSave:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4dC-4p-1JI"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="D3H-xa-gUb">
+                                <rect key="frame" x="0.0" y="1016" width="600" height="140"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="I9m-JE-6Lm"/>
@@ -63,8 +73,8 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EMY-xx-2rX">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-sd-rMb">
-                                                    <rect key="frame" x="29" y="99" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-sd-rMb">
+                                                    <rect key="frame" x="32" y="103" width="36" height="17"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -137,22 +147,13 @@
                                     <action selector="tweetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="deK-do-JSD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP1-M7-a6k">
-                                <rect key="frame" x="133" y="752" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="clickedSave:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4dC-4p-1JI"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="BVu-B3-9jG" secondAttribute="trailing" constant="15" id="027-T2-p8d"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="5Py-BZ-GXw"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D3H-xa-gUb" secondAttribute="bottom" constant="-140" id="8h4-Iw-cPq"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D3H-xa-gUb" secondAttribute="bottom" constant="-16" id="8h4-Iw-cPq"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="width" secondItem="BVu-B3-9jG" secondAttribute="width" multiplier="0.2" id="B4W-Bx-OWD"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="leading" secondItem="BVu-B3-9jG" secondAttribute="leading" constant="-15" id="CAW-na-NCj"/>
                             <constraint firstItem="BVu-B3-9jG" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-16" id="HfS-0k-k5c"/>
@@ -164,8 +165,11 @@
                             <constraint firstItem="FGh-Ix-vlb" firstAttribute="top" secondItem="BVu-B3-9jG" secondAttribute="bottom" constant="-16" id="acE-5H-mM7"/>
                             <constraint firstItem="ebR-IG-Obk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="c0a-18-ddk"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="width" secondItem="Fo3-N7-vIE" secondAttribute="height" multiplier="1:1" id="fVK-x5-oGD"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="jP1-M7-a6k" secondAttribute="bottom" constant="16" id="gmh-Hf-xo9"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="bottom" secondItem="BVu-B3-9jG" secondAttribute="bottom" constant="15" id="iGh-kk-3yX"/>
                             <constraint firstItem="ebR-IG-Obk" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="jDc-Hg-edi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D3H-xa-gUb" secondAttribute="bottom" constant="-156" id="k7f-JA-KHL"/>
+                            <constraint firstAttribute="centerX" secondItem="jP1-M7-a6k" secondAttribute="centerX" id="qTg-fT-lhJ"/>
                             <constraint firstItem="ebR-IG-Obk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="rqS-Yg-o1b"/>
                             <constraint firstAttribute="centerX" secondItem="FGh-Ix-vlb" secondAttribute="centerX" id="rqY-wS-FR8"/>
                             <constraint firstItem="FGh-Ix-vlb" firstAttribute="centerY" secondItem="jP1-M7-a6k" secondAttribute="centerY" constant="4.5" id="stY-nL-DCu"/>
@@ -178,8 +182,11 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="wKo-bk-hWg"/>
+                                <exclude reference="W6Q-tK-rmE"/>
+                                <exclude reference="stY-nL-DCu"/>
                                 <exclude reference="5Py-BZ-GXw"/>
                                 <exclude reference="xH2-cz-4Nc"/>
+                                <exclude reference="8h4-Iw-cPq"/>
                             </mask>
                         </variation>
                         <connections>
@@ -192,10 +199,11 @@
                     <connections>
                         <outlet property="cameraButton" destination="FGh-Ix-vlb" id="lOc-yE-cwe"/>
                         <outlet property="collectionView" destination="D3H-xa-gUb" id="7mM-s5-Yo2"/>
-                        <outlet property="collectionViewBottomConstraint" destination="8h4-Iw-cPq" id="DrU-nB-Mvn"/>
+                        <outlet property="collectionViewBottomConstraint" destination="k7f-JA-KHL" id="4Jm-me-4Fq"/>
                         <outlet property="imageTopConstraint" destination="JVB-4K-BFX" id="8In-t6-oKB"/>
                         <outlet property="imageView" destination="BVu-B3-9jG" id="afE-UX-fdi"/>
                         <outlet property="logo" destination="ebR-IG-Obk" id="gUx-DK-gZA"/>
+                        <outlet property="saveButton" destination="jP1-M7-a6k" id="JTu-sM-d6o"/>
                         <outlet property="settingsButton" destination="Fo3-N7-vIE" id="Cav-Fg-Xl0"/>
                         <outlet property="twitterButton" destination="SzM-4U-eRZ" id="blw-Ri-ApH"/>
                         <segue destination="8We-aq-eBm" kind="presentation" identifier="SHOW_GALLERY" id="wUz-FI-2kc"/>

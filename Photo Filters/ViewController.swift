@@ -25,7 +25,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var lastClickedIndex : Int?
   var collectionViewInBounds = false
   var requestedGalleryType : GalleryType = .Random
-
+  
+  @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var collectionViewBottomConstraint: NSLayoutConstraint!
@@ -40,6 +41,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    saveButton.enabled = false
     var options = [kCIContextWorkingColorSpace : NSNull()]
     var myEAGLContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
     self.GPUContext = CIContext(EAGLContext: myEAGLContext, options: options)
@@ -105,14 +107,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   func didTapOnPicture(image: UIImage) {
 
     imageView.removeGestureRecognizer(tapRecognizer)
-
-    self.placeholderImage = image
-    self.imageHasBeenSet = true
-    self.getThumbnailOfMainImage()
-    self.generateThumbnails()
+    println("Did Tap")
+    saveButton.enabled = true
+    placeholderImage = image
+    imageHasBeenSet = true
+    getThumbnailOfMainImage()
+    generateThumbnails()
     collectionView.reloadData()
-    
-    self.imageView.image = image
+    imageView.image = image
     
     println(image.size)
   }
@@ -198,19 +200,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       var imageFilter = CIFilter(name: filters[indexPath.row].name)
       imageFilter.setDefaults()
       imageFilter.setValue(image, forKey: kCIInputImageKey)
-      imageFilter.setValue("CICrystallize", forKey: "name")
       var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
       var extent = result.extent()
       var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)
       
-      UIView.transitionWithView(self.imageView, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+      UIView.transitionWithView(self.imageView, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
         self.imageView.image = UIImage(CGImage: imageRef)
       }) { (success) -> Void in
       }
       lastClickedIndex = indexPath.row
     }
-
-    
   }
   
   // MARK: - Helper Methods
@@ -293,7 +292,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       self.presentViewController(cameraVC, animated: true, completion: { () -> Void in
         println("Presented!")
       })
-      
     }
     
     let libraryAction = UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default) { (action) -> Void in
@@ -329,8 +327,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     UIGraphicsEndImageContext()
     
     let composeTweetVC = storyboard?.instantiateViewControllerWithIdentifier("COMPOSE") as ComposeTweetViewController
-    composeTweetVC.image = self.imageView.image
-    let asset = self.imageView.image?.imageAsset
+    
+    let postSize = CGRect(x: 0, y: 0, width: 400, height: 400)
+    UIGraphicsBeginImageContext(CGSize(width: 400, height: 400))
+    self.imageView.image!.drawInRect(postSize)
+    let smallerImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    composeTweetVC.image = smallerImage
     composeTweetVC.backgroundImage = screenshot
     
     self.presentViewController(composeTweetVC, animated: true) { () -> Void in
@@ -357,7 +361,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   @IBAction func swipedDown(sender: AnyObject) {
     if collectionViewInBounds{
-      collectionViewBottomConstraint.constant -= 140
+      collectionViewBottomConstraint.constant -= 156
       imageTopConstraint.constant += 50
       collectionViewInBounds = false
     }
@@ -368,7 +372,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   @IBAction func swipedUp(sender: AnyObject) {
     if collectionViewInBounds == false{
-      collectionViewBottomConstraint.constant += 140
+      collectionViewBottomConstraint.constant += 156
       imageTopConstraint.constant -= 50
       collectionViewInBounds = true
     }

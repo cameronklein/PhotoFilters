@@ -41,8 +41,6 @@ class CameraViewController: UIViewController {
     self.view.layer.addSublayer(previewLayer)
     previewLayer.masksToBounds = true
 
-    println(previewLayer.frame)
-    println(previewLayer.bounds)
 
     var device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
     var error : NSError?

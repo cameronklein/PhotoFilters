@@ -171,7 +171,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
       case .Random:
         fetchRandomImageForImagePath(indexPath, completionHandler: { (image) -> Void in
           if cell.tag == currentTag{
-            cell.imageView.image = image
+            UIView.transitionWithView(cell.imageView, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+              cell.imageView.image = image
+              }) { (success) -> Void in
+            }
             cell.spinningWheel.stopAnimating()
             cell.userInteractionEnabled = true
           }
