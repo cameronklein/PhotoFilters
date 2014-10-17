@@ -11,7 +11,7 @@ import UIKit
 class ComposeTweetViewController: UIViewController, UITextFieldDelegate {
   
   @IBOutlet weak var miniView: UIView!
-  
+  @IBOutlet weak var spinningWheel: UIActivityIndicatorView!
   @IBOutlet weak var charactersRemaining: UILabel!
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var imageView: UIImageView!
@@ -59,9 +59,11 @@ class ComposeTweetViewController: UIViewController, UITextFieldDelegate {
   // MARK - Helper Methods
 
   @IBAction func post(sender: UIButton) {
+    println("Post Called!")
+    self.spinningWheel.startAnimating()
     networkController.postTweet(textField.text, image: image!, completionHandler: { (errorDescription) -> (Void) in
-      
       NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+        self.spinningWheel.stopAnimating()
         if errorDescription == nil {
           self.textField.text = nil
           let alert = UIAlertController(title: "Success!", message: "Tweet Posted!", preferredStyle: UIAlertControllerStyle.Alert)

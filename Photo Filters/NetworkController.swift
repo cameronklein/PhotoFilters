@@ -18,15 +18,15 @@ class NetworkController {
   
   init () {
   }
-  
 
   func postTweet(status : String, image: UIImage, completionHandler : (errorDescription: String?) -> (Void)) {
-    
+    println("Network Controller Called!")
     let accountStore = ACAccountStore()
     let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
     
     accountStore.requestAccessToAccountsWithType(accountType, options: nil) { (granted: Bool, error) -> Void in
       if granted {
+        println("Granted!")
         
         let png = UIImagePNGRepresentation(image)
         let accounts = accountStore.accountsWithAccountType(accountType)

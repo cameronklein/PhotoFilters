@@ -26,7 +26,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var requestedGalleryType : GalleryType = .Random
 
   @IBOutlet weak var imageView: UIImageView!
-  @IBOutlet weak var blurView: UIVisualEffectView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var collectionViewBottomConstraint: NSLayoutConstraint!
   @IBOutlet weak var imageTopConstraint: NSLayoutConstraint!
@@ -102,87 +101,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   // MARK: - GalleryDelegate
   
-  func didTapOnPicture(image: UIImage, frame: CGRect? = nil) {
+  func didTapOnPicture(image: UIImage) {
 
     imageView.removeGestureRecognizer(tapRecognizer)
 
-    
-    tempView = UIImageView(frame: frame!)
-    tempView!.image = image
-    self.view.addSubview(tempView!)
     self.placeholderImage = image
     self.imageHasBeenSet = true
     self.getThumbnailOfMainImage()
     self.generateThumbnails()
     collectionView.reloadData()
     
+    self.imageView.image = image
     
-    let x = ((self.imageView.frame.origin.x + tempView!.frame.origin.x) / 2)
-    let y = ((self.imageView.frame.origin.y + tempView!.frame.origin.y) / 2) - 100
-    let height = self.imageView.frame.height * 1.5
-    let width = self.imageView.frame.width * 1.5
-    let rect = CGRect(x: x, y: y, width: width, height: height)
-    
-    let thePath = CGPathCreateMutable()
-    CGPathMoveToPoint(thePath, nil, tempView!.center.x, tempView!.center.y)
-    let maxY = tempView!.center.y - 300
-    var maxX : CGFloat!
-    if tempView!.center.x < imageView.center.x {
-      maxX = tempView!.center.x
-    } else {
-      maxX = imageView.center.x
-    }
-    
-    CGPathAddCurveToPoint(thePath, nil, tempView!.center.x, maxY, maxX, maxY, imageView.center.x, imageView.center.y)
-    let animation = CAKeyframeAnimation(keyPath: "position")
-    animation.path = thePath
-    animation.duration = 1.0
-    
-    let multiplier = imageView.frame.height / tempView!.frame.size.height
-    let originalScale = CATransform3DMakeScale(1.0, 1.0, 1.0)
-    let newScale = CATransform3DMakeScale(multiplier, multiplier, 0.0)
-    println(multiplier)
-    let value1 = NSValue(CATransform3D: originalScale)
-    let value2 = NSValue(CATransform3D: newScale)
-    let array : [AnyObject] = [value1, value2]
-    let valuesArray = NSArray(array: array)
-    let timeArray = NSArray(objects: NSNumber(float: 0.0), NSNumber(float: 1.0))
-    
-    let animationTransform = CAKeyframeAnimation(keyPath: "bounds")
-    
-    animationTransform.duration = 1.0
-    let initialBounds = NSValue(CGRect: tempView!.bounds)
-    let secondBounds = NSValue(CGRect: tempView!.bounds)
-    let finalBounds = NSValue(CGRect: imageView.bounds)
-
-    animationTransform.values = [initialBounds, secondBounds, finalBounds]
-    animationTransform.keyTimes = [0.0, 0.5, 1.0]
-    animationTransform.delegate = self
-    
-//    self.tempView!.layer.addAnimation(animationTransform, forKey: "transform")
-//    self.tempView!.layer.addAnimation(animation, forKey: "position")
-//    self.tempView!.bounds = self.imageView.bounds
-//    self.tempView!.center = self.imageView.center
-    
-//    UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: { () -> Void in
-//
-//      self.tempView!.layer.addAnimation(animationTransform, forKey: "transform")
-//      self.tempView!.layer.addAnimation(animation, forKey: "position")
-//      
-//      
-//      }) { (success) -> Void in
-//        println("Completion called!")
-//        if success == true {
-//          self.tempView!.bounds = self.imageView.bounds
-//          self.tempView!.center = self.imageView.center
-//          println("Success == true")
-//          self.imageView.image = image
-//          self.tempView!.removeFromSuperview()
-//        }
-//    }
-    
-      self.imageView.image = image
-      self.tempView!.removeFromSuperview()
+    println(image.size)
   }
   
   // MARK: - UIImagePickerControllerDelegate
@@ -229,10 +160,40 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   }
   
   // MARK: - UICollectionView Delegate
+  
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
     if lastClickedIndex != indexPath.row{
+      let orientation = placeholderImage!.imageOrientation.toRaw()
+      println("Orientation = \(orientation)")
       var image = CIImage(image: placeholderImage!)
+      switch orientation {
+      case 1:
+        image = image.imageByApplyingOrientation(3)
+      case 2:
+        println("Unknown. Trying 1")
+        image = image.imageByApplyingOrientation(1)
+      case 3:
+        image = image.imageByApplyingOrientation(6)
+      case 4:
+        println("Unknown. Trying 1")
+        image = image.imageByApplyingOrientation(1)
+      case 5:
+        println("Unknown. Trying 1")
+        image = image.imageByApplyingOrientation(1)
+      case 6:
+        println("Unknown. Trying 1")
+        image = image.imageByApplyingOrientation(1)
+      case 7:
+        println("Unknown. Trying 1")
+        image = image.imageByApplyingOrientation(1)
+      case 7:
+        println("Unknown. Trying 1")
+        image = image.imageByApplyingOrientation(1)
+      default:
+        println("Good to go!")
+      }
+
       var imageFilter = CIFilter(name: filters[indexPath.row].name)
       imageFilter.setDefaults()
       imageFilter.setValue(image, forKey: kCIInputImageKey)
@@ -315,6 +276,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    let camera2Action = UIAlertAction(title: "AV Camera Framework", style: UIAlertActionStyle.Default) { (action) -> Void in
+      let window : UIWindow = UIApplication.sharedApplication().keyWindow
+      UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
+      self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
+      let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      
+      let cameraVC = self.storyboard?.instantiateViewControllerWithIdentifier("AV_FRAMEWORK") as CameraViewController
+      cameraVC.backgroundImage = screenshot
+
+      cameraVC.delegate = self
+      
+      self.presentViewController(cameraVC, animated: true, completion: { () -> Void in
+        println("Presented!")
+      })
+      
+    }
+    
     let libraryAction = UIAlertAction(title: "Photo Library", style: UIAlertActionStyle.Default) { (action) -> Void in
       self.requestedGalleryType = .PhotoAPI
       self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
@@ -329,13 +308,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     if UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Front) || UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear) {
       alertController.addAction(cameraAction)
+      alertController.addAction(camera2Action)
     }
     alertController.addAction(libraryAction)
     alertController.addAction(galleryAction)
     alertController.addAction(cancelAction)
     
     self.presentViewController(alertController, animated: true, completion: nil)
-    
   }
   
   
@@ -349,10 +328,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     let composeTweetVC = storyboard?.instantiateViewControllerWithIdentifier("COMPOSE") as ComposeTweetViewController
     composeTweetVC.image = self.imageView.image
-    
+    let asset = self.imageView.image?.imageAsset
     composeTweetVC.backgroundImage = screenshot
-    
-
     
     self.presentViewController(composeTweetVC, animated: true) { () -> Void in
       println("Presented!")
