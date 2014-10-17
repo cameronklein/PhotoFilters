@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Photos
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, GalleryDelegate {
   
@@ -197,6 +198,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       var imageFilter = CIFilter(name: filters[indexPath.row].name)
       imageFilter.setDefaults()
       imageFilter.setValue(image, forKey: kCIInputImageKey)
+      imageFilter.setValue("CICrystallize", forKey: "name")
       var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
       var extent = result.extent()
       var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)
@@ -374,6 +376,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       self.view.layoutSubviews()
     })
 
+  }
+  
+  @IBAction func clickedSave(sender: AnyObject) {
+    let library = PHPhotoLibrary.sharedPhotoLibrary()
+    
+    library.performChanges({ () -> Void in
+      println("Trying to register change request...")
+      PHAssetChangeRequest.creationRequestForAssetFromImage(self.imageView.image)
+    }, completionHandler: { (success, error) -> Void in
+      println("Done!")
+    })
   }
 }
 

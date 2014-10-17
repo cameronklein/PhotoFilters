@@ -43,8 +43,7 @@ class CameraViewController: UIViewController {
 
     println(previewLayer.frame)
     println(previewLayer.bounds)
-    
-    
+
     var device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
     var error : NSError?
     var input = AVCaptureDeviceInput.deviceInputWithDevice(device, error: &error) as AVCaptureDeviceInput!
