@@ -32,6 +32,8 @@
 		7EBCFE6819ED91750076261D /* FilterThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCFE6719ED91750076261D /* FilterThumbnail.swift */; };
 		7EBCFE6A19EDA0600076261D /* CoreDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCFE6919EDA0600076261D /* CoreDataSeeder.swift */; };
 		7EBCFE6C19EDA0D80076261D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBCFE6B19EDA0D80076261D /* Filter.swift */; };
+		7EEB765019F318F200F2A214 /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EEB764F19F318F200F2A214 /* paper.png */; };
+		7EEB765219F31A1100F2A214 /* papersmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EEB765119F31A1100F2A214 /* papersmall.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		7EBCFE6719ED91750076261D /* FilterThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterThumbnail.swift; sourceTree = "<group>"; };
 		7EBCFE6919EDA0600076261D /* CoreDataSeeder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataSeeder.swift; sourceTree = "<group>"; };
 		7EBCFE6B19EDA0D80076261D /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		7EEB764F19F318F200F2A214 /* paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper.png; sourceTree = "<group>"; };
+		7EEB765119F31A1100F2A214 /* papersmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = papersmall.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,8 @@
 		7EB7B5BD19EC349000B7B5F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7EEB764F19F318F200F2A214 /* paper.png */,
+				7EEB765119F31A1100F2A214 /* papersmall.png */,
 				7E2295ED19EEE17C00BBF814 /* cancel-32.png */,
 				7EA0696C19EF0EE7007D19BF /* twitter-32.png */,
 				7E824E4819ECAE7E0028D3FE /* drawing-1.svg */,
@@ -284,7 +290,9 @@
 				7E348AB919EC6A18002FD3DA /* corner.png in Resources */,
 				7E824E4919ECAE7E0028D3FE /* drawing-1.svg in Resources */,
 				7EB7B5CD19EC349000B7B5F3 /* LaunchScreen.xib in Resources */,
+				7EEB765019F318F200F2A214 /* paper.png in Resources */,
 				7E2295EE19EEE17C00BBF814 /* cancel-32.png in Resources */,
+				7EEB765219F31A1100F2A214 /* papersmall.png in Resources */,
 				7E348AB519EC67BA002FD3DA /* placeholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

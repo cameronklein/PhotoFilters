@@ -90,9 +90,11 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   }
   
   override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
     
-    self.view.backgroundColor = UIColor(patternImage: backgroundImage)
-    
+    if let background = backgroundImage {
+     self.view.backgroundColor = UIColor(patternImage: background)
+    }
     if type == .PhotoAPI {
     let swipeImage = UIImageView(image: UIImage(named: "Swipe"))
     swipeImage.alpha = 0.0

@@ -74,7 +74,6 @@ class CameraViewController: UIViewController {
         for port in cameraConnection.inputPorts {
           if let videoPort = port as? AVCaptureInputPort {
             if videoPort.mediaType == AVMediaTypeVideo {
-              cameraConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
               videoConnection = cameraConnection
               break;
             }
@@ -88,6 +87,15 @@ class CameraViewController: UIViewController {
     self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(buffer : CMSampleBuffer!, error : NSError!) -> Void in
       var data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
       var image = UIImage(data: data)
+      var smallerDimension = min(image.size.width, image.size.height)
+      let newSize = CGSize(width: smallerDimension, height: smallerDimension)
+      
+      UIGraphicsBeginImageContextWithOptions(newSize, true, 1.0)
+      image.drawAtPoint(CGPoint(x: 0, y: 0))
+      image = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      
+      
       self.delegate?.didTapOnPicture(image)
       println(image.size)
       self.dismissViewControllerAnimated(true, completion: nil)

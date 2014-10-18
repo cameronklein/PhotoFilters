@@ -30,9 +30,12 @@ class FilterThumbnail {
     
     var image = CIImage(image: originalThumbnail)
     var imageFilter = CIFilter(name: filterName)
-    imageFilter.setDefaults()
     imageFilter.setValue(image, forKey: kCIInputImageKey)
-    
+    imageFilter.setDefaults()
+    if filterName == "CIAdditionCompositing" {
+      let image = UIImage(named: "papersmall")
+      imageFilter.setValue(CIImage(image: image), forKey: "inputBackgroundImage")
+    }
     var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
     var extent = result.extent()
     var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)

@@ -199,14 +199,28 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   func applyFilterToImage(image: CIImage, filter: Filter, value1: Float?, value2: Float?) -> UIImage{
     
+    
     var imageFilter = CIFilter(name: filter.name)
     imageFilter.setDefaults()
     imageFilter.setValue(image, forKey: kCIInputImageKey)
-    if value1 != nil{
-      imageFilter.setValue(value1!, forKey: filter.value1)
-    }
-    if value2 != nil && filter.value1 != filter.value2{
-      imageFilter.setValue(value2!, forKey: filter.value2)
+    
+    if filter.name == "CIAdditionCompositing" {
+      println("Trying!!")
+      var paper = UIImage(named: "paper")
+      
+      UIGraphicsBeginImageContextWithOptions(UIImage(CIImage: image).size, true, 1.0)
+      paper.drawInRect(CGRect(origin: CGPoint(x: 0, y: 0), size: UIImage(CIImage: image).size))
+      paper = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      imageFilter.setValue(CIImage(image: paper), forKey: "inputBackgroundImage")
+      
+    } else{
+      if value1 != nil{
+        imageFilter.setValue(value1!, forKey: filter.value1)
+      }
+      if value2 != nil && filter.value1 != filter.value2{
+        imageFilter.setValue(value2!, forKey: filter.value2)
+      }
     }
     
     var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
@@ -215,6 +229,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     return UIImage(CGImage: imageRef)
   }
+  
   
   func getCIImageWithProperOrientation() -> CIImage {
     let orientation = placeholderImage!.imageOrientation.toRaw()
@@ -467,8 +482,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     println("Applying filter with values x: \(finalX) y: \(finalY)")
-    self.imageView.image = self.applyFilterToImage(image, filter: currentFilter!, value1: finalX, value2: finalY)
     
+    if currentFilter!.name == "CICircleSplashDistortion" {
+      self.imageView.image = self.applyFilterToImage(image, filter: currentFilter!, value1: x, value2: y)
+    } else {
+      self.imageView.image = self.applyFilterToImage(image, filter: currentFilter!, value1: finalX, value2: finalY)
+    }
   }
 }
 

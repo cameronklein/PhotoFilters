@@ -116,20 +116,20 @@ class CoreDataSeeder {
     sharpen.value2Default = 0.4
     
     var bloom = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: managedObjectContext) as Filter
-    bloom.name = "CIBloom"
-    bloom.readableName = "Bloom"
-    bloom.value1 = "inputRadius"
-    bloom.value2 = "inputIntensity"
-    bloom.value1Default = 10.00
-    bloom.value2Default = 1.0
+    bloom.name = "CIAdditionCompositing"
+    bloom.readableName = "Paper"
+    bloom.value1 = "inputCenter"
+    bloom.value2 = "inputRadius"
+    bloom.value1Default = 200.0
+    bloom.value2Default = 100.0
     
     var gloom = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: managedObjectContext) as Filter
-    gloom.name = "CIGloom"
-    gloom.readableName = "Gloom"
-    gloom.value1 = "inputRadius"
-    gloom.value2 = "inputIntensity"
-    gloom.value1Default = 10.00
-    gloom.value2Default = 1.0
+    gloom.name = "CIStraightenFilter"
+    gloom.readableName = "Straighten"
+    gloom.value1 = "inputAngle"
+    gloom.value2 = "inputAngle"
+    gloom.value1Default = 5.0
+    gloom.value2Default = 5.0
     
     var vignette = NSEntityDescription.insertNewObjectForEntityForName("Filter", inManagedObjectContext: managedObjectContext) as Filter
     vignette.name = "CIVignette"
