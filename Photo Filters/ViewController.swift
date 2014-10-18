@@ -314,7 +314,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   @IBAction func buttonPressed(sender: AnyObject){
     
     let alertController = UIAlertController(title: nil, message: "Import Photo From", preferredStyle: UIAlertControllerStyle.ActionSheet)
-    let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) { (action) -> Void in
+    let cameraAction = UIAlertAction(title: "Camera (UIImagePicker)", style: UIAlertActionStyle.Default) { (action) -> Void in
       let picker = UIImagePickerController()
       picker.allowsEditing = true
       picker.sourceType = UIImagePickerControllerSourceType.Camera
@@ -322,7 +322,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    let camera2Action = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) { (action) -> Void in
+    let camera2Action = UIAlertAction(title: "Camera (Photos Framework)", style: UIAlertActionStyle.Default) { (action) -> Void in
       let window : UIWindow = UIApplication.sharedApplication().keyWindow
       UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
       self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
@@ -352,7 +352,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
     
     if UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Front) || UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear) {
-      //alertController.addAction(cameraAction)
+      alertController.addAction(cameraAction)
       alertController.addAction(camera2Action)
     }
     alertController.addAction(libraryAction)
