@@ -55,6 +55,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     layout.itemSize = CGSize(width: screenWidth * 0.29, height: screenWidth * 0.29)
   
     self.initialSize = layout.itemSize
+    collectionView.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
     
     switch type{
       
@@ -89,9 +90,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   }
   
   override func viewDidAppear(animated: Bool) {
+    
     self.view.backgroundColor = UIColor(patternImage: backgroundImage)
     
-    if type == .Random {
+    if type == .PhotoAPI {
     let swipeImage = UIImageView(image: UIImage(named: "Swipe"))
     swipeImage.alpha = 0.0
 
@@ -160,11 +162,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     cell.imageView.image = nil
     cell.spinningWheel.startAnimating()
     var urlString : String!
-
-    if cell.hasSetMotion == false {
-      cell.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
-      cell.hasSetMotion = true
-    }
     
     var currentTag = cell.tag + 1
     cell.tag = currentTag

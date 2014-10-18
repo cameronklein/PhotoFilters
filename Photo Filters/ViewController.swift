@@ -22,7 +22,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var GPUContext : CIContext!
   var imageHasBeenSet = false
   var originalThumbnail : UIImage?
-  var lastClickedIndex : Int?
   var collectionViewInBounds = false
   var requestedGalleryType : GalleryType = .Random
   var currentFilter : Filter?
@@ -47,21 +46,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    saveButton.enabled = false
+    
     var options = [kCIContextWorkingColorSpace : NSNull()]
     var myEAGLContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
     self.GPUContext = CIContext(EAGLContext: myEAGLContext, options: options)
     
     self.appDel = UIApplication.sharedApplication().delegate as AppDelegate
     let context = appDel.managedObjectContext
-    
-    
-    
-    
+
     self.fetchFilters()
     self.generateThumbnails()
-    self.collectionView.delegate = self
-    self.collectionView.dataSource = self
     
     tapRecognizer = UITapGestureRecognizer()
     tapRecognizer.addTarget(self, action: "buttonPressed:")
@@ -73,35 +67,28 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     let buttonsArray = [cameraButton, twitterButton, settingsButton]
     for button in buttonsArray{
-      button.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
+      button.addNaturalOnTopEffect(maximumRelativeValue: 10.0)
     }
-    logo.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
-    self.imageView.addNaturalOnTopEffect(maximumRelativeValue: 10.0)
+    logo.addNaturalOnTopEffect(maximumRelativeValue: 10.0)
+    self.imageView.addNaturalOnTopEffect(maximumRelativeValue: 5.0)
     
-    twitterButton.hidden = true
-    settingsButton.hidden = true
-    tweetLabel.hidden = true
-    filterLabel.hidden = true
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(true)
+    panLabel.alpha = 0.0
   }
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(true)
-    UIView.animateWithDuration(2.0, delay: 1.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+    
+    UIView.animateWithDuration(2.0,
+      delay: 1.5,
+      options: UIViewAnimationOptions.CurveEaseInOut,
+      animations: { () -> Void in
       self.cameraLabel.alpha = 0
-    }) { (success) -> Void in
-      println("Done")
-      }
+      },
+      completion: nil)
     }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-  }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
     if segue.identifier == "SHOW_GALLERY"{
       
       let window : UIWindow = UIApplication.sharedApplication().keyWindow
@@ -123,7 +110,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   func didTapOnPicture(image: UIImage) {
 
     imageView.removeGestureRecognizer(tapRecognizer)
-    println("Did Tap")
     saveButton.enabled = true
     placeholderImage = image
     imageHasBeenSet = true
@@ -140,11 +126,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     UIView.animateWithDuration(2.0, delay: 1.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
       self.tweetLabel.alpha = 0.0
       self.filterLabel.alpha = 0.0
-      }) { (success) -> Void in
-        println("Done")
-    }
+    }, completion: nil)
 
-    println(image.size)
+    println("Image size = \(image.size)")
   }
   
   // MARK: - UIImagePickerControllerDelegate
@@ -193,48 +177,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   // MARK: - UICollectionView Delegate
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    
-    var image : CIImage
-    if lastClickedIndex != indexPath.row{
-      let orientation = placeholderImage!.imageOrientation.toRaw()
-      println("Orientation = \(orientation)")
-      image = CIImage(image: placeholderImage!)
-      switch orientation {
-      case 1:
-        image = image.imageByApplyingOrientation(3)
-      case 2:
-        println("Unknown. Trying 1")
-        image = image.imageByApplyingOrientation(1)
-      case 3:
-        image = image.imageByApplyingOrientation(6)
-      case 4:
-        println("Unknown. Trying 1")
-        image = image.imageByApplyingOrientation(1)
-      case 5:
-        println("Unknown. Trying 1")
-        image = image.imageByApplyingOrientation(1)
-      case 6:
-        println("Unknown. Trying 1")
-        image = image.imageByApplyingOrientation(1)
-      case 7:
-        println("Unknown. Trying 1")
-        image = image.imageByApplyingOrientation(1)
-      case 7:
-        println("Unknown. Trying 1")
-        image = image.imageByApplyingOrientation(1)
-      default:
-        println("Good to go!")
-      }
-
+  
+      let image = getCIImageWithProperOrientation()
       currentFilter = filters[indexPath.row]
+    
       UIView.transitionWithView(self.imageView, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
         self.imageView.image = self.applyFilterToImage(image, filter: self.currentFilter!, value1: nil, value2: nil)
+        self.panLabel.alpha = 1.0
         return ()
       }) { (success) -> Void in
       }
-      lastClickedIndex = indexPath.row
-    }
-    
+
     if panRecognizer == nil {
       panRecognizer = UIPanGestureRecognizer()
       panRecognizer.addTarget(self, action: "userDidPan:")
@@ -250,8 +203,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     imageFilter.setDefaults()
     imageFilter.setValue(image, forKey: kCIInputImageKey)
     if value1 != nil{
-      println("Applying \(value1!) to \(filter.value1)")
       imageFilter.setValue(value1!, forKey: filter.value1)
+    }
+    if value2 != nil && filter.value1 != filter.value2{
+      imageFilter.setValue(value2!, forKey: filter.value2)
     }
     
     var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
@@ -259,6 +214,39 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)
     
     return UIImage(CGImage: imageRef)
+  }
+  
+  func getCIImageWithProperOrientation() -> CIImage {
+    let orientation = placeholderImage!.imageOrientation.toRaw()
+    println("Orientation = \(orientation)")
+    var image = CIImage(image: placeholderImage!)
+    switch orientation {
+    case 1:
+      image = image.imageByApplyingOrientation(3)
+    case 2:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 3:
+      image = image.imageByApplyingOrientation(6)
+    case 4:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 5:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 6:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 7:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 7:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    default:
+      println("Good to go!")
+    }
+    return image
   }
   
   func fetchFilters(){
@@ -442,8 +430,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   func userDidPan(sender: UIPanGestureRecognizer){
     let location = sender.locationInView(self.imageView)
-    let x : Float = Float(location.x / imageView.frame.width)
-    let y : Float = Float(location.y / imageView.frame.height * -1)
+    let x : Float = Float(location.x / imageView.frame.width * 2.0)
+    let y : Float = Float(1 - location.y / imageView.frame.height * 2.0)
     
     let finalX = x * currentFilter!.value1Default
     let finalY = y * currentFilter!.value2Default
@@ -455,24 +443,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     case 1:
       image = image.imageByApplyingOrientation(3)
     case 2:
-      println("Unknown. Trying 1")
+      println("Don't know what orientation transform to use. Trying 1")
       image = image.imageByApplyingOrientation(1)
     case 3:
       image = image.imageByApplyingOrientation(6)
     case 4:
-      println("Unknown. Trying 1")
+      println("Don't know what orientation transform to use. Trying 1.")
       image = image.imageByApplyingOrientation(1)
     case 5:
-      println("Unknown. Trying 1")
+      println("Don't know what orientation transform to use. Trying 1")
       image = image.imageByApplyingOrientation(1)
     case 6:
-      println("Unknown. Trying 1")
+      println("Don't know what orientation transform to use. Trying 1")
       image = image.imageByApplyingOrientation(1)
     case 7:
-      println("Unknown. Trying 1")
+      println("Don't know what orientation transform to use. Trying 1")
       image = image.imageByApplyingOrientation(1)
     case 7:
-      println("Unknown. Trying 1")
+      println("Don't know what orientation transform to use. Trying 1")
       image = image.imageByApplyingOrientation(1)
     default:
       println("Good to go!")

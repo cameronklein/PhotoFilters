@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP1-M7-a6k">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP1-M7-a6k">
                                 <rect key="frame" x="203" y="929" width="194" height="47"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="29"/>
                                 <state key="normal" title="Save to Library!">
@@ -96,6 +96,10 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="rBK-V0-gVe"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="UIl-e4-uee"/>
+                                </connections>
                             </collectionView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="BVu-B3-9jG" userLabel="Main Image">
                                 <rect key="frame" x="32" y="198" width="536" height="536"/>
@@ -121,7 +125,7 @@
                                     <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mUr-Sa-lBu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo3-N7-vIE" userLabel="Settings Button">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo3-N7-vIE" userLabel="Settings Button">
                                 <rect key="frame" x="17" y="642" width="107" height="107"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Fo3-N7-vIE" secondAttribute="height" multiplier="1:1" id="DZE-89-USf"/>
@@ -134,7 +138,7 @@
                                     <action selector="settingsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hzk-9M-3m7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SzM-4U-eRZ" userLabel="Tweet Button">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SzM-4U-eRZ" userLabel="Tweet Button">
                                 <rect key="frame" x="476" y="642" width="107" height="107"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SzM-4U-eRZ" secondAttribute="height" multiplier="1:1" id="u4b-2v-aNR"/>
@@ -147,13 +151,13 @@
                                     <action selector="tweetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="deK-do-JSD"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Filters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vkm-Dj-wCk">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Filters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vkm-Dj-wCk">
                                 <rect key="frame" x="50" y="757" width="41" height="19"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tweet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bl2-KG-SwO">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tweet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bl2-KG-SwO">
                                 <rect key="frame" x="491" y="757" width="61" height="19"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -165,9 +169,9 @@
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pan across picture to change filter intensity." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-6L-af9">
-                                <rect key="frame" x="179" y="174" width="243" height="16"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pan across picture to change filter intensity." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-6L-af9">
+                                <rect key="frame" x="189" y="179" width="224" height="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -179,7 +183,7 @@
                             <constraint firstAttribute="centerX" secondItem="PDl-6L-af9" secondAttribute="centerX" id="5KM-Zd-H02"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="5Py-BZ-GXw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D3H-xa-gUb" secondAttribute="bottom" constant="-16" id="8h4-Iw-cPq"/>
-                            <constraint firstItem="BVu-B3-9jG" firstAttribute="top" secondItem="PDl-6L-af9" secondAttribute="bottom" constant="8" id="AK5-5d-deE"/>
+                            <constraint firstItem="BVu-B3-9jG" firstAttribute="top" secondItem="PDl-6L-af9" secondAttribute="bottom" constant="4" id="AK5-5d-deE"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="width" secondItem="BVu-B3-9jG" secondAttribute="width" multiplier="0.2" id="B4W-Bx-OWD"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="leading" secondItem="BVu-B3-9jG" secondAttribute="leading" constant="-15" id="CAW-na-NCj"/>
                             <constraint firstItem="Vkm-Dj-wCk" firstAttribute="centerX" secondItem="Fo3-N7-vIE" secondAttribute="centerX" id="Dgf-Be-MCz"/>
