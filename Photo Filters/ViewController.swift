@@ -389,7 +389,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       println("Trying to register change request...")
       PHAssetChangeRequest.creationRequestForAssetFromImage(self.imageView.image)
     }, completionHandler: { (success, error) -> Void in
-      println("Done!")
+      if success{
+        let alert = UIAlertController(title: "Photo Saved!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+        alert.addAction(ok)
+        self.presentViewController(alert, animated: true, completion: nil)
+      }
     })
   }
 }
