@@ -38,20 +38,17 @@ class ComposeTweetViewController: UIViewController, UITextFieldDelegate {
     charactersRemaining.text = "140"
     
     textField.addTarget(self, action: "textFieldDidChange", forControlEvents: UIControlEvents.EditingChanged)
-    
-    
   }
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     self.imageView.image = image
-
   }
+  
   override func viewDidAppear(animated: Bool) {
     self.view.backgroundColor = UIColor(patternImage: backgroundImage)
   }
 
-  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
   }

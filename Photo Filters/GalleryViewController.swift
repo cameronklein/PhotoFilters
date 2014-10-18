@@ -90,6 +90,8 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   
   override func viewDidAppear(animated: Bool) {
     self.view.backgroundColor = UIColor(patternImage: backgroundImage)
+    
+    if type == .Random {
     let swipeImage = UIImageView(image: UIImage(named: "Swipe"))
     swipeImage.alpha = 0.0
 
@@ -111,6 +113,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
             },
             completion: { (success) -> Void in
         })
+      }
     }
   }
   
@@ -362,6 +365,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
       }
     }
   }
+  
   @IBAction func swipedRight(sender: AnyObject) {
     if type == .PhotoAPI {
       self.collectionType.next()
@@ -392,6 +396,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
       }
     }
   }
+  
   @IBAction func userDidPinch(sender: UIPinchGestureRecognizer) {
     self.isPinching = true
     let minWidth = screenWidth * 0.08

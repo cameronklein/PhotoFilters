@@ -26,6 +26,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var collectionViewInBounds = false
   var requestedGalleryType : GalleryType = .Random
   
+  @IBOutlet weak var cameraLabel: UILabel!
+  @IBOutlet weak var tweetLabel: UILabel!
+  @IBOutlet weak var filterLabel: UILabel!
   @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var collectionView: UICollectionView!
@@ -65,22 +68,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let seeder = CoreDataSeeder(context: context!)
     //seeder.seedCoreData()
     
-    let buttonsArray = [cameraButton,twitterButton,settingsButton]
+    let buttonsArray = [cameraButton, twitterButton, settingsButton]
     for button in buttonsArray{
       button.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
     }
     logo.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
     self.imageView.addNaturalOnTopEffect(maximumRelativeValue: 10.0)
     
+    twitterButton.hidden = true
+    settingsButton.hidden = true
+    tweetLabel.hidden = true
+    filterLabel.hidden = true
   }
   
   override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(false)
+    super.viewWillAppear(true)
   }
   
   override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(false)
-  }
+    super.viewDidAppear(true)
+    UIView.animateWithDuration(2.0, delay: 1.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+      self.cameraLabel.alpha = 0
+    }) { (success) -> Void in
+      println("Done")
+      }
+    }
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
@@ -101,6 +113,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       destinationVC.delegate = self
     }
   }
+
   
   // MARK: - GalleryDelegate
   
@@ -115,6 +128,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     generateThumbnails()
     collectionView.reloadData()
     imageView.image = image
+    
+    twitterButton.hidden = false
+    settingsButton.hidden = false
+    tweetLabel.hidden = false
+    filterLabel.hidden = false
+    
+    UIView.animateWithDuration(2.0, delay: 1.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+      self.tweetLabel.alpha = 0.0
+      self.filterLabel.alpha = 0.0
+      }) { (success) -> Void in
+        println("Done")
+    }
+    
+    
+    
     
     println(image.size)
   }
@@ -250,7 +278,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   func generateThumbnails(){
     if let image = originalThumbnail{
-      
       filterThumbnails.removeAll(keepCapacity: true)
       for filter in filters {
         filterThumbnails.append(FilterThumbnail(name: filter.name, readable: filter.readableName, thumbnail: image, queue: imageQueue, context: GPUContext))
@@ -277,7 +304,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    let camera2Action = UIAlertAction(title: "AV Camera Framework", style: UIAlertActionStyle.Default) { (action) -> Void in
+    let camera2Action = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) { (action) -> Void in
       let window : UIWindow = UIApplication.sharedApplication().keyWindow
       UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
       self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
@@ -299,7 +326,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
     }
     
-    let galleryAction = UIAlertAction(title: "Random Picture Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
+    let galleryAction = UIAlertAction(title: "Stock Photos", style: UIAlertActionStyle.Default) { (action) -> Void in
       self.requestedGalleryType = .Random
       self.performSegueWithIdentifier("SHOW_GALLERY", sender: self)
     }
@@ -307,7 +334,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
     
     if UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Front) || UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.Rear) {
-      alertController.addAction(cameraAction)
+      //alertController.addAction(cameraAction)
       alertController.addAction(camera2Action)
     }
     alertController.addAction(libraryAction)
@@ -345,11 +372,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   @IBAction func settingsButtonPressed(sender: AnyObject) {
     
     if collectionViewInBounds{
-      collectionViewBottomConstraint.constant -= 140
+      collectionViewBottomConstraint.constant -= 156
       imageTopConstraint.constant += 50
       collectionViewInBounds = false
     } else{
-      collectionViewBottomConstraint.constant += 140
+      collectionViewBottomConstraint.constant += 156
       imageTopConstraint.constant -= 50
       collectionViewInBounds = true
     }

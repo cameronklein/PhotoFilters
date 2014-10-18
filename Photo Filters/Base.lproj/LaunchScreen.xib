@@ -13,7 +13,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="cWg-72-YDs">
-                    <rect key="frame" x="8" y="143" width="464" height="195"/>
+                    <rect key="frame" x="40" y="157" width="400" height="167"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="cWg-72-YDs" secondAttribute="height" multiplier="1005:421" id="1YP-1l-TNI"/>
                     </constraints>
@@ -21,10 +21,10 @@
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="trailingMargin" secondItem="cWg-72-YDs" secondAttribute="trailing" id="957-jP-gfn"/>
+                <constraint firstAttribute="trailingMargin" secondItem="cWg-72-YDs" secondAttribute="trailing" constant="32" id="957-jP-gfn"/>
                 <constraint firstAttribute="centerY" secondItem="cWg-72-YDs" secondAttribute="centerY" id="PQS-6f-Cgy"/>
                 <constraint firstAttribute="centerX" secondItem="cWg-72-YDs" secondAttribute="centerX" id="kgV-MX-tQq"/>
-                <constraint firstItem="cWg-72-YDs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="r1K-cb-96Q"/>
+                <constraint firstItem="cWg-72-YDs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="32" id="r1K-cb-96Q"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
