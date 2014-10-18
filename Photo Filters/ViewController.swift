@@ -25,7 +25,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   var lastClickedIndex : Int?
   var collectionViewInBounds = false
   var requestedGalleryType : GalleryType = .Random
+  var currentFilter : Filter?
+  var panRecognizer : UIPanGestureRecognizer!
   
+  @IBOutlet weak var panLabel: UILabel!
   @IBOutlet weak var cameraLabel: UILabel!
   @IBOutlet weak var tweetLabel: UILabel!
   @IBOutlet weak var filterLabel: UILabel!
@@ -52,6 +55,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     self.appDel = UIApplication.sharedApplication().delegate as AppDelegate
     let context = appDel.managedObjectContext
     
+    
+    
+    
     self.fetchFilters()
     self.generateThumbnails()
     self.collectionView.delegate = self
@@ -64,10 +70,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     imageView.layer.borderColor = UIColor.whiteColor().CGColor
     imageView.layer.borderWidth = 2
-    
-    let seeder = CoreDataSeeder(context: context!)
-    //seeder.seedCoreData()
-    
+
     let buttonsArray = [cameraButton, twitterButton, settingsButton]
     for button in buttonsArray{
       button.addNaturalOnTopEffect(maximumRelativeValue: 20.0)
@@ -140,10 +143,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       }) { (success) -> Void in
         println("Done")
     }
-    
-    
-    
-    
+
     println(image.size)
   }
   
@@ -194,10 +194,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
+    var image : CIImage
     if lastClickedIndex != indexPath.row{
       let orientation = placeholderImage!.imageOrientation.toRaw()
       println("Orientation = \(orientation)")
-      var image = CIImage(image: placeholderImage!)
+      image = CIImage(image: placeholderImage!)
       switch orientation {
       case 1:
         image = image.imageByApplyingOrientation(3)
@@ -225,30 +226,39 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         println("Good to go!")
       }
 
-      var imageFilter = CIFilter(name: filters[indexPath.row].name)
-      imageFilter.setDefaults()
-      imageFilter.setValue(image, forKey: kCIInputImageKey)
-      var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
-      var extent = result.extent()
-      var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)
-      
+      currentFilter = filters[indexPath.row]
       UIView.transitionWithView(self.imageView, duration: 0.3, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-        self.imageView.image = UIImage(CGImage: imageRef)
+        self.imageView.image = self.applyFilterToImage(image, filter: self.currentFilter!, value1: nil, value2: nil)
+        return ()
       }) { (success) -> Void in
       }
       lastClickedIndex = indexPath.row
+    }
+    
+    if panRecognizer == nil {
+      panRecognizer = UIPanGestureRecognizer()
+      panRecognizer.addTarget(self, action: "userDidPan:")
+      self.imageView.addGestureRecognizer(panRecognizer)
     }
   }
   
   // MARK: - Helper Methods
   
-  override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
-    println("Animation Did Stop Function Called")
-    if flag == true {
-      println("Flag = true")
-      self.imageView.image = placeholderImage
-      self.tempView?.removeFromSuperview()
+  func applyFilterToImage(image: CIImage, filter: Filter, value1: Float?, value2: Float?) -> UIImage{
+    
+    var imageFilter = CIFilter(name: filter.name)
+    imageFilter.setDefaults()
+    imageFilter.setValue(image, forKey: kCIInputImageKey)
+    if value1 != nil{
+      println("Applying \(value1!) to \(filter.value1)")
+      imageFilter.setValue(value1!, forKey: filter.value1)
     }
+    
+    var result = imageFilter.valueForKey(kCIOutputImageKey) as CIImage
+    var extent = result.extent()
+    var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)
+    
+    return UIImage(CGImage: imageRef)
   }
   
   func fetchFilters(){
@@ -262,6 +272,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     if let filters = results as? [Filter]{
       self.filters = filters
+      if filters.count == 0 {
+        let seeder = CoreDataSeeder(context: context!)
+        seeder.seedCoreData()
+        self.fetchFilters()
+      }
     }
     
     println("\(filters.count) filters retrieved!")
@@ -423,6 +438,49 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(alert, animated: true, completion: nil)
       }
     })
+  }
+  
+  func userDidPan(sender: UIPanGestureRecognizer){
+    let location = sender.locationInView(self.imageView)
+    let x : Float = Float(location.x / imageView.frame.width)
+    let y : Float = Float(location.y / imageView.frame.height * -1)
+    
+    let finalX = x * currentFilter!.value1Default
+    let finalY = y * currentFilter!.value2Default
+    
+    let orientation = placeholderImage!.imageOrientation.toRaw()
+    println("Orientation = \(orientation)")
+    var image = CIImage(image: placeholderImage!)
+    switch orientation {
+    case 1:
+      image = image.imageByApplyingOrientation(3)
+    case 2:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 3:
+      image = image.imageByApplyingOrientation(6)
+    case 4:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 5:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 6:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 7:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    case 7:
+      println("Unknown. Trying 1")
+      image = image.imageByApplyingOrientation(1)
+    default:
+      println("Good to go!")
+    }
+    
+    println("Applying filter with values x: \(finalX) y: \(finalY)")
+    self.imageView.image = self.applyFilterToImage(image, filter: currentFilter!, value1: finalX, value2: finalY)
+    
   }
 }
 

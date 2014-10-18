@@ -312,25 +312,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     }
   }
   
-  func getRandomSectionTitleForSection(section : Int, completionHandler: (String) -> Void) {
-    
-      if headerNames.count <= section {
-        let url = NSURL(string: "http://randomword.setgetgo.com/get.php")
-        imageQueue.addOperationWithBlock({
-          var error : NSError
-          let data = NSData(contentsOfURL: url)
-          NSOperationQueue.mainQueue().addOperationWithBlock({
-            var string = NSString(data: data, encoding: NSASCIIStringEncoding).capitalizedString
-            self.headerNames[section] = string
-            completionHandler(string)
-            return ()
-          })
-        })
-      } else {
-        completionHandler(headerNames[section]!)
-      }
-    }
-  
   // MARK: - IBAction
   
   @IBAction func cancelPressed(sender: AnyObject) {
@@ -404,17 +385,16 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     let scale = sender.scale
     
-      self.collectionView.performBatchUpdates({ () -> Void in
+      //self.collectionView.performBatchUpdates({ () -> Void in
         self.layout.itemSize = CGSize(width: self.initialSize.width * scale, height: self.initialSize.width * scale)
         if self.layout.itemSize.width < minWidth{
           self.layout.itemSize = CGSize(width: minWidth, height: minWidth)
         } else if self.layout.itemSize.width > maxWidth{
           self.layout.itemSize = CGSize(width: maxWidth, height: maxWidth)
         }
-      }, completion: nil )
-    
+      //}, completion: nil )
+    layout.invalidateLayout()
 
-    
     if sender.state == .Ended {
       self.initialSize = layout.itemSize
       self.isPinching = false

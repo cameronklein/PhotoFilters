@@ -13,7 +13,9 @@ class Filter: NSManagedObject {
 
     @NSManaged var name: String
     @NSManaged var readableName: String
-    @NSManaged var favorited: NSNumber
+    @NSManaged var value1: String
+    @NSManaged var value2: String
+    @NSManaged var value1Default: Float
+    @NSManaged var value2Default: Float
   
-
 }

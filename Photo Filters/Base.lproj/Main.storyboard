@@ -165,13 +165,21 @@
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pan across picture to change filter intensity." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-6L-af9">
+                                <rect key="frame" x="179" y="174" width="243" height="16"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="BVu-B3-9jG" secondAttribute="trailing" constant="15" id="027-T2-p8d"/>
+                            <constraint firstAttribute="centerX" secondItem="PDl-6L-af9" secondAttribute="centerX" id="5KM-Zd-H02"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="5Py-BZ-GXw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D3H-xa-gUb" secondAttribute="bottom" constant="-16" id="8h4-Iw-cPq"/>
+                            <constraint firstItem="BVu-B3-9jG" firstAttribute="top" secondItem="PDl-6L-af9" secondAttribute="bottom" constant="8" id="AK5-5d-deE"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="width" secondItem="BVu-B3-9jG" secondAttribute="width" multiplier="0.2" id="B4W-Bx-OWD"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="leading" secondItem="BVu-B3-9jG" secondAttribute="leading" constant="-15" id="CAW-na-NCj"/>
                             <constraint firstItem="Vkm-Dj-wCk" firstAttribute="centerX" secondItem="Fo3-N7-vIE" secondAttribute="centerX" id="Dgf-Be-MCz"/>
@@ -231,6 +239,7 @@
                         <outlet property="imageTopConstraint" destination="JVB-4K-BFX" id="8In-t6-oKB"/>
                         <outlet property="imageView" destination="BVu-B3-9jG" id="afE-UX-fdi"/>
                         <outlet property="logo" destination="ebR-IG-Obk" id="gUx-DK-gZA"/>
+                        <outlet property="panLabel" destination="PDl-6L-af9" id="zam-Ov-Ihz"/>
                         <outlet property="saveButton" destination="jP1-M7-a6k" id="JTu-sM-d6o"/>
                         <outlet property="settingsButton" destination="Fo3-N7-vIE" id="Cav-Fg-Xl0"/>
                         <outlet property="tweetLabel" destination="Bl2-KG-SwO" id="bGb-jy-XHm"/>
