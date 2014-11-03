@@ -91,7 +91,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     if segue.identifier == "SHOW_GALLERY"{
       
-      let window : UIWindow = UIApplication.sharedApplication().keyWindow
+      let window : UIWindow = UIApplication.sharedApplication().keyWindow!
       UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
       self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
       let screenshot = UIGraphicsGetImageFromCurrentImageContext()
@@ -207,9 +207,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     if filter.name == "CIAdditionCompositing" {
       println("Trying!!")
       var paper = UIImage(named: "paper")
+      var imageSize : CGSize = image.extent().size
       
-      UIGraphicsBeginImageContextWithOptions(UIImage(CIImage: image).size, true, 1.0)
-      paper.drawInRect(CGRect(origin: CGPoint(x: 0, y: 0), size: UIImage(CIImage: image).size))
+      UIGraphicsBeginImageContextWithOptions(imageSize, true, 1.0)
+      paper!.drawInRect(CGRect(origin: CGPoint(x: 0, y: 0), size: imageSize))
       paper = UIGraphicsGetImageFromCurrentImageContext()
       UIGraphicsEndImageContext()
       imageFilter.setValue(CIImage(image: paper), forKey: "inputBackgroundImage")
@@ -227,12 +228,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var extent = result.extent()
     var imageRef = self.GPUContext!.createCGImage(result, fromRect: extent)
     
-    return UIImage(CGImage: imageRef)
+    return UIImage(CGImage: imageRef!)!
   }
   
   
   func getCIImageWithProperOrientation() -> CIImage {
-    let orientation = placeholderImage!.imageOrientation.toRaw()
+    let orientation = placeholderImage!.imageOrientation.rawValue
     println("Orientation = \(orientation)")
     var image = CIImage(image: placeholderImage!)
     switch orientation {
@@ -323,7 +324,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     let camera2Action = UIAlertAction(title: "Camera (Photos Framework)", style: UIAlertActionStyle.Default) { (action) -> Void in
-      let window : UIWindow = UIApplication.sharedApplication().keyWindow
+      let window : UIWindow = UIApplication.sharedApplication().keyWindow!
       UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
       self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
       let screenshot = UIGraphicsGetImageFromCurrentImageContext()
@@ -365,7 +366,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   
   @IBAction func tweetButtonPressed(sender: AnyObject) {
     
-    let window : UIWindow = UIApplication.sharedApplication().keyWindow
+    let window : UIWindow = UIApplication.sharedApplication().keyWindow!
     UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, 1.0)
     self.view.layer.renderInContext(UIGraphicsGetCurrentContext())
     let screenshot = UIGraphicsGetImageFromCurrentImageContext()
@@ -451,7 +452,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let finalX = x * currentFilter!.value1Default
     let finalY = y * currentFilter!.value2Default
     
-    let orientation = placeholderImage!.imageOrientation.toRaw()
+    let orientation = placeholderImage!.imageOrientation.rawValue
     println("Orientation = \(orientation)")
     var image = CIImage(image: placeholderImage!)
     switch orientation {

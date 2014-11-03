@@ -271,10 +271,10 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     var urlString = "http://lorempixel.com/400/400/" + categories[indexPath.section]
     let url = NSURL(string: urlString)
     imageQueue.addOperationWithBlock { () -> Void in
-      let data = NSData(contentsOfURL: url)
-      let image = UIImage(data: data)
+      let data = NSData(contentsOfURL: url!)
+      let image = UIImage(data: data!)
       NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-        completionHandler(image)
+        completionHandler(image!)
       })
     }
     
