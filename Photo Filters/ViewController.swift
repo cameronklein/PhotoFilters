@@ -46,7 +46,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
     var options = [kCIContextWorkingColorSpace : NSNull()]
     var myEAGLContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
     self.GPUContext = CIContext(EAGLContext: myEAGLContext, options: options)

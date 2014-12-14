@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6246"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -19,10 +19,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP1-M7-a6k">
-                                <rect key="frame" x="203" y="929" width="194" height="47"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="29"/>
-                                <state key="normal" title="Save to Library!">
+                            <imageView userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="gqZ-8c-eJu">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jP1-M7-a6k">
+                                <rect key="frame" x="220" y="931" width="162" height="45"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
+                                <state key="normal" title="Save to Library">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -73,9 +76,9 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EMY-xx-2rX">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-sd-rMb">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-sd-rMb">
                                                     <rect key="frame" x="32" y="103" width="36" height="17"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -153,49 +156,57 @@
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Filters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vkm-Dj-wCk">
                                 <rect key="frame" x="50" y="757" width="41" height="19"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tweet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bl2-KG-SwO">
                                 <rect key="frame" x="491" y="757" width="61" height="19"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiK-Pa-hAT">
-                                <rect key="frame" x="255" y="829" width="89" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <rect key="frame" x="253" y="829" width="93" height="28"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Pan across picture to change filter intensity." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-6L-af9">
-                                <rect key="frame" x="189" y="179" width="224" height="15"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pan across picture to change filter intensity." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDl-6L-af9">
+                                <rect key="frame" x="182" y="177" width="236" height="17"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="BVu-B3-9jG" secondAttribute="trailing" constant="15" id="027-T2-p8d"/>
+                            <constraint firstItem="gqZ-8c-eJu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2ej-mt-lOb"/>
                             <constraint firstAttribute="centerX" secondItem="PDl-6L-af9" secondAttribute="centerX" id="5KM-Zd-H02"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="5Py-BZ-GXw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D3H-xa-gUb" secondAttribute="bottom" constant="-16" id="8h4-Iw-cPq"/>
                             <constraint firstItem="BVu-B3-9jG" firstAttribute="top" secondItem="PDl-6L-af9" secondAttribute="bottom" constant="4" id="AK5-5d-deE"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="width" secondItem="BVu-B3-9jG" secondAttribute="width" multiplier="0.2" id="B4W-Bx-OWD"/>
+                            <constraint firstItem="gqZ-8c-eJu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Bqb-c9-Zyn"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="leading" secondItem="BVu-B3-9jG" secondAttribute="leading" constant="-15" id="CAW-na-NCj"/>
                             <constraint firstItem="Vkm-Dj-wCk" firstAttribute="centerX" secondItem="Fo3-N7-vIE" secondAttribute="centerX" id="Dgf-Be-MCz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gqZ-8c-eJu" secondAttribute="bottom" id="EWc-wF-V1i"/>
+                            <constraint firstAttribute="trailing" secondItem="gqZ-8c-eJu" secondAttribute="trailing" id="Gt2-9Q-C9O"/>
                             <constraint firstItem="BVu-B3-9jG" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-16" id="HfS-0k-k5c"/>
                             <constraint firstItem="BVu-B3-9jG" firstAttribute="top" secondItem="ebR-IG-Obk" secondAttribute="bottom" constant="58" id="JVB-4K-BFX"/>
                             <constraint firstItem="yiK-Pa-hAT" firstAttribute="top" secondItem="FGh-Ix-vlb" secondAttribute="bottom" constant="4" id="Jzv-7V-PEi"/>
+                            <constraint firstAttribute="bottom" secondItem="gqZ-8c-eJu" secondAttribute="bottom" id="Lj9-OR-ZUe"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="width" secondItem="BVu-B3-9jG" secondAttribute="width" multiplier="0.2" id="NQS-vk-Mne"/>
+                            <constraint firstItem="gqZ-8c-eJu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Ndm-zL-DaP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="D3H-xa-gUb" secondAttribute="trailing" constant="-16" id="O3j-az-zxl"/>
                             <constraint firstItem="Vkm-Dj-wCk" firstAttribute="top" secondItem="Fo3-N7-vIE" secondAttribute="bottom" constant="4" id="PVO-XW-w9e"/>
+                            <constraint firstItem="gqZ-8c-eJu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="RcM-uK-Ooe"/>
                             <constraint firstItem="SzM-4U-eRZ" firstAttribute="bottom" secondItem="BVu-B3-9jG" secondAttribute="bottom" constant="15" id="UdZ-NE-U1o"/>
                             <constraint firstItem="FGh-Ix-vlb" firstAttribute="leading" secondItem="jP1-M7-a6k" secondAttribute="trailing" constant="67" id="W6Q-tK-rmE"/>
                             <constraint firstItem="Bl2-KG-SwO" firstAttribute="width" secondItem="SzM-4U-eRZ" secondAttribute="height" multiplier="61:107" id="WFB-VC-r8b"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gqZ-8c-eJu" secondAttribute="trailing" id="YNR-gG-1mm"/>
                             <constraint firstItem="FGh-Ix-vlb" firstAttribute="top" secondItem="BVu-B3-9jG" secondAttribute="bottom" constant="-16" id="acE-5H-mM7"/>
                             <constraint firstItem="ebR-IG-Obk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="c0a-18-ddk"/>
                             <constraint firstItem="Fo3-N7-vIE" firstAttribute="width" secondItem="Fo3-N7-vIE" secondAttribute="height" multiplier="1:1" id="fVK-x5-oGD"/>
@@ -218,6 +229,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Ndm-zL-DaP"/>
+                                <exclude reference="RcM-uK-Ooe"/>
+                                <exclude reference="YNR-gG-1mm"/>
                                 <exclude reference="wKo-bk-hWg"/>
                                 <exclude reference="W6Q-tK-rmE"/>
                                 <exclude reference="stY-nL-DCu"/>
@@ -225,6 +239,7 @@
                                 <exclude reference="xH2-cz-4Nc"/>
                                 <exclude reference="WFB-VC-r8b"/>
                                 <exclude reference="8h4-Iw-cPq"/>
+                                <exclude reference="EWc-wF-V1i"/>
                             </mask>
                         </variation>
                         <connections>
@@ -471,7 +486,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zWp-Ne-wHd">
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="7yB-fP-Xcx">
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="7yB-fP-Xcx">
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <vibrancyEffect>
@@ -578,7 +593,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nZT-x9-cO3">
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="uTZ-Yf-eML">
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="uTZ-Yf-eML">
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <vibrancyEffect>
@@ -731,6 +746,7 @@
         <image name="Gears" width="90" height="90"/>
         <image name="Twitter2" width="90" height="90"/>
         <image name="compose.png" width="128" height="128"/>
+        <image name="gradient2.jpg" width="750" height="1334"/>
         <image name="logo" width="216" height="65"/>
         <image name="placeholder.png" width="420" height="420"/>
     </resources>
